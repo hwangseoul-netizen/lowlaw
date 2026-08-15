@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LOWLAW — Seal a record</title>
+<meta name="description" content="Seal a file or a piece of text. Your device computes the hash. Our server signs the hash and the time — never the content.">
+<style>
+:root{--canvas:#F5F7FA;--surface:#fff;--soft:#F1F4F8;--border:#DDE3EA;--border2:#C9D3E0;
+ --t1:#18212F;--t2:#445164;--t3:#667085;--brand:#2457D6;--brandh:#1D4ED8;--brands:#EFF6FF;
+ --gb:#ECFDF3;--gt:#067647;--gl:#ABEFC6;--ob:#FFF7ED;--ot:#9A3412;--ol:#FED7AA;
+ --rb:#FEF2F2;--rt:#B42318;--rl:#FECDCA;--pb:#F5F3FF;--pt:#6D28D9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--canvas);color:var(--t1);font-size:15px;line-height:1.72;letter-spacing:-.004em;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.top{height:60px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;
+ padding:0 22px;gap:14px;box-shadow:0 1px 3px rgba(24,33,47,.06)}
+.logo{font-weight:850;font-size:19px;letter-spacing:-.055em}.logo em{font-style:normal;color:var(--brand)}
+.sp{flex:1}
+.nav a{color:var(--t2);text-decoration:none;font-weight:700;font-size:14px;margin-left:18px}
+.nav a:hover{color:var(--brand)}
+.wrap{max-width:720px;margin:0 auto;padding:40px 22px 100px}
+h1{font-size:31px;letter-spacing:-.042em;line-height:1.22;margin-bottom:8px;font-weight:820}
+.lede{color:var(--t2);margin-bottom:26px;font-size:16px}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin:12px 0;
+ box-shadow:0 1px 3px rgba(24,33,47,.06)}
+.card.g{border-left:4px solid var(--gt);background:linear-gradient(90deg,var(--gb),#fff 45%)}
+.card.o{border-left:4px solid var(--ot);background:linear-gradient(90deg,var(--ob),#fff 45%)}
+.card.p{border-left:4px solid var(--pt);background:linear-gradient(90deg,var(--pb),#fff 45%)}
+label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--t3);
+ font-weight:800;margin:16px 0 6px}
+textarea,input[type=text]{width:100%;background:#fff;border:1px solid var(--border2);color:var(--t1);
+ border-radius:10px;padding:11px 13px;font-size:14px;font-family:inherit}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid #BFDBFE;border-color:var(--brand)}
+.drop{border:2px dashed var(--border2);border-radius:14px;padding:34px 20px;text-align:center;
+ cursor:pointer;background:#fff;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--brand);background:var(--brands)}
+.drop b{display:block;font-size:16px}
+.drop span{font-size:13px;color:var(--t3)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;border:0;
+ border-radius:10px;padding:12px 24px;font-size:15px;font-weight:750;cursor:pointer;font-family:inherit;margin-top:18px}
+.btn:hover{background:var(--brandh)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.gh{background:#fff;border:1px solid var(--border2);color:var(--t1)}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12.5px;background:var(--soft);
+ border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--t2);
+ white-space:pre-wrap;word-break:break-all;line-height:1.75;margin:10px 0}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tab{padding:8px 16px;border:1px solid var(--border2);border-radius:10px;background:#fff;cursor:pointer;
+ font-size:14px;font-weight:700;color:var(--t2)}
+.tab.on{background:var(--brands);border-color:var(--brand);color:var(--brand)}
+.stamp{text-align:center;padding:30px 20px;background:var(--gb);border:2px solid var(--gl);border-radius:16px;margin:16px 0}
+.stamp .k{font-size:12px;letter-spacing:.34em;color:var(--gt);font-weight:850}
+.stamp .v{font-size:26px;font-weight:850;letter-spacing:-.035em;margin:4px 0}
+.stamp .s{font-size:12.5px;color:var(--t3)}
+.kv{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;border-bottom:1px solid var(--border);gap:14px}
+.kv:last-child{border:0}.kv span:first-child{color:var(--t3);flex-shrink:0}
+.kv span:last-child{text-align:right;word-break:break-all;font-family:ui-monospace;font-size:12.5px}
+.xs{font-size:12.5px;color:var(--t3)}
+.sm{font-size:13.5px;color:var(--t2)}
+.hide{display:none}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:3px 10px;border-radius:999px;
+ border:1px solid var(--gl);background:var(--gb);color:var(--gt);font-weight:700}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo">LOW<em>LAW</em></div>
+  <div class="sp"></div>
+  <nav class="nav"><a href="/">App</a><a href="/seal.html">Seal</a><a href="/verify.html">Verify</a></nav>
+</div>
+
+<div class="wrap">
+  <h1>Seal a record.</h1>
+  <p class="lede">Your device computes the hash. Our server signs the hash and the time —
+  <b>never the content.</b> Nothing you drop here is uploaded anywhere.</p>
+
+  <div class="tabs">
+    <div class="tab on" data-t="file">📄 A file</div>
+    <div class="tab" data-t="text">✏️ Some text</div>
+  </div>
+
+  <div id="paneFile">
+    <div class="drop" id="drop">
+      <b>Drop a file, or click to choose</b>
+      <span>Photo · PDF · audio · anything. It never leaves this browser.</span>
+      <input type="file" id="file" class="hide">
+    </div>
+    <div id="fileInfo" class="mono hide"></div>
+  </div>
+
+  <div id="paneText" class="hide">
+    <label>Text to seal</label>
+    <textarea id="text" placeholder="Paste a message, a note, a URL, anything."></textarea>
+  </div>
+
+  <button class="btn" id="go" disabled>🔒 Seal this</button>
+  <p class="xs" id="status"></p>
+
+  <div id="out" class="hide">
+    <div class="stamp">
+      <div class="k">PROTECTED</div>
+      <div class="v" id="stampTime">—</div>
+      <div class="s">Original preserved · signature verifiable by anyone</div>
+    </div>
+    <div class="card">
+      <div class="kv"><span>Record</span><span id="rId">—</span></div>
+      <div class="kv"><span>sha256</span><span id="rHash">—</span></div>
+      <div class="kv"><span>Sealed at</span><span id="rTime">—</span></div>
+      <div class="kv"><span>Size</span><span id="rSize">—</span></div>
+      <div class="kv"><span>Integrity</span><span>modified_by_lowlaw = false</span></div>
+      <div class="kv"><span>Signature</span><span class="chip">✓ Ed25519</span></div>
+    </div>
+    <label>Your receipt — this is the whole thing</label>
+    <div class="mono" id="rToken"></div>
+    <button class="btn gh" id="copy">📋 Copy receipt</button>
+    <a class="btn" id="verifyLink" href="#">🔗 Verify it now</a>
+
+    <div class="card p" style="margin-top:22px">
+      <b>Why this matters</b>
+      <p class="sm">That receipt is self-contained. Anyone can check it at
+      <b>lowlaws.com/verify</b> without an account, without trusting us, and
+      <b>even if LOWLAW no longer exists</b> — because we signed a hash, not your content.</p>
+    </div>
+  </div>
+
+  <div class="card o" style="margin-top:34px">
+    <b>🟠 What a seal proves, and what it doesn't</b>
+    <p class="sm">It proves this exact content existed at this exact moment, and hasn't changed since.
+    <b>It says nothing about whether the content is true</b> — same as a notary, and we will never
+    imply otherwise.</p>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let mode='file', payload=null;
+
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  mode=t.dataset.t;
+  $('paneFile').classList.toggle('hide',mode!=='file');
+  $('paneText').classList.toggle('hide',mode!=='text');
+  payload=null; $('go').disabled=true; $('fileInfo').classList.add('hide'); $('out').classList.add('hide');
+});
+
+const drop=$('drop'), fileEl=$('file');
+drop.onclick=()=>fileEl.click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=()=>drop.classList.remove('over');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');take(e.dataTransfer.files[0])};
+fileEl.onchange=e=>take(e.target.files[0]);
+
+function take(f){
+  if(!f) return;
+  payload={kind:'file',name:f.name,bytes:f.size,file:f};
+  $('fileInfo').textContent=f.name+'\n'+f.size.toLocaleString()+' bytes · '+(f.type||'unknown type');
+  $('fileInfo').classList.remove('hide');
+  $('go').disabled=false;
+}
+$('text').oninput=e=>{
+  const v=e.target.value;
+  payload=v.trim()?{kind:'text',name:'text record',bytes:new Blob([v]).size,text:v}:null;
+  $('go').disabled=!payload;
+};
+
+async function sha256(buf){
+  const h=await crypto.subtle.digest('SHA-256',buf);
+  return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+$('go').onclick=async()=>{
+  if(!payload) return;
+  $('go').disabled=true; $('status').textContent='Hashing on this device…';
+  try{
+    const buf = payload.kind==='file'
+      ? await payload.file.arrayBuffer()
+      : new TextEncoder().encode(payload.text).buffer;
+    const hash = await sha256(buf);
+    $('status').textContent='Requesting a signed timestamp…';
+    const r = await fetch('/api/seal',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({action:'seal',sha256:hash,name:payload.name,bytes:payload.bytes,kind:payload.kind})});
+    const d = await r.json();
+    if(!r.ok) throw new Error(d.error||'seal failed');
+    const t=new Date(d.receipt.payload.sealed_at);
+    $('stampTime').textContent=t.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    $('rId').textContent=d.id;
+    $('rHash').textContent=hash;
+    $('rTime').textContent=d.receipt.payload.sealed_at;
+    $('rSize').textContent=(payload.bytes||0).toLocaleString()+' bytes';
+    $('rToken').textContent=d.token;
+    $('verifyLink').href='/verify.html?t='+encodeURIComponent(d.token);
+    $('out').classList.remove('hide');
+    $('status').textContent='';
+    $('out').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(err){
+    $('status').textContent='Could not seal: '+err.message;
+  }
+  $('go').disabled=false;
+};
+
+$('copy').onclick=()=>{
+  navigator.clipboard.writeText($('rToken').textContent);
+  $('copy').textContent='✓ Copied';
+  setTimeout(()=>$('copy').textContent='📋 Copy receipt',1600);
+};
+</script>
+</body>
+</html>

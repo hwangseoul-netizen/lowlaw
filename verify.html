@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LOWLAW — Verify a seal</title>
+<meta name="description" content="Check a LOWLAW seal. No account needed. Verification proves integrity, not correctness.">
+<style>
+:root{--canvas:#F5F7FA;--surface:#fff;--soft:#F1F4F8;--border:#DDE3EA;--border2:#C9D3E0;
+ --t1:#18212F;--t2:#445164;--t3:#667085;--brand:#2457D6;--brandh:#1D4ED8;--brands:#EFF6FF;
+ --gb:#ECFDF3;--gt:#067647;--gl:#ABEFC6;--ob:#FFF7ED;--ot:#9A3412;--ol:#FED7AA;
+ --rb:#FEF2F2;--rt:#B42318;--rl:#FECDCA;--pb:#F5F3FF;--pt:#6D28D9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--canvas);color:var(--t1);font-size:15px;line-height:1.72;letter-spacing:-.004em;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.top{height:60px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;
+ padding:0 22px;gap:14px;box-shadow:0 1px 3px rgba(24,33,47,.06)}
+.logo{font-weight:850;font-size:19px;letter-spacing:-.055em}.logo em{font-style:normal;color:var(--brand)}
+.sp{flex:1}
+.nav a{color:var(--t2);text-decoration:none;font-weight:700;font-size:14px;margin-left:18px}
+.nav a:hover{color:var(--brand)}
+.wrap{max-width:720px;margin:0 auto;padding:40px 22px 100px}
+h1{font-size:31px;letter-spacing:-.042em;line-height:1.22;margin-bottom:8px;font-weight:820}
+.lede{color:var(--t2);margin-bottom:26px;font-size:16px}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin:12px 0;
+ box-shadow:0 1px 3px rgba(24,33,47,.06)}
+.card.g{border-left:4px solid var(--gt);background:linear-gradient(90deg,var(--gb),#fff 45%)}
+.card.o{border-left:4px solid var(--ot);background:linear-gradient(90deg,var(--ob),#fff 45%)}
+.card.r{border-left:4px solid var(--rt);background:linear-gradient(90deg,var(--rb),#fff 45%)}
+label{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--t3);
+ font-weight:800;margin:16px 0 6px}
+textarea{width:100%;background:#fff;border:1px solid var(--border2);color:var(--t1);border-radius:10px;
+ padding:11px 13px;font-size:13px;font-family:ui-monospace,Menlo,monospace;min-height:120px;resize:vertical}
+textarea:focus{outline:2px solid #BFDBFE;border-color:var(--brand)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;border:0;
+ border-radius:10px;padding:12px 24px;font-size:15px;font-weight:750;cursor:pointer;font-family:inherit;margin-top:16px}
+.btn:hover{background:var(--brandh)}
+.btn.gh{background:#fff;border:1px solid var(--border2);color:var(--t1)}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--soft);border:1px solid var(--border);
+ border-radius:10px;padding:14px 16px;color:var(--t2);white-space:pre-wrap;word-break:break-all;line-height:1.75;margin:10px 0}
+.kv{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;border-bottom:1px solid var(--border);gap:14px}
+.kv:last-child{border:0}.kv span:first-child{color:var(--t3);flex-shrink:0}
+.kv span:last-child{text-align:right;word-break:break-all;font-family:ui-monospace;font-size:12.5px}
+.big{text-align:center;padding:30px 20px;border-radius:16px;margin:16px 0}
+.big.ok{background:var(--gb);border:2px solid var(--gl)}
+.big.no{background:var(--rb);border:2px solid var(--rl)}
+.big .k{font-size:12px;letter-spacing:.34em;font-weight:850}
+.big.ok .k{color:var(--gt)}.big.no .k{color:var(--rt)}
+.big .v{font-size:30px;font-weight:850;letter-spacing:-.035em;margin:4px 0}
+.xs{font-size:12.5px;color:var(--t3)}.sm{font-size:13.5px;color:var(--t2)}
+.hide{display:none}
+.drop{border:2px dashed var(--border2);border-radius:14px;padding:24px 20px;text-align:center;cursor:pointer;background:#fff}
+.drop:hover,.drop.over{border-color:var(--brand);background:var(--brands)}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo">LOW<em>LAW</em></div>
+  <div class="sp"></div>
+  <nav class="nav"><a href="/">App</a><a href="/seal.html">Seal</a><a href="/verify.html">Verify</a></nav>
+</div>
+
+<div class="wrap">
+  <h1>Verify a seal.</h1>
+  <p class="lede">Paste a receipt. <b>No account. No login.</b> You do not have to trust us —
+  the signature checks out on its own.</p>
+
+  <label>Receipt</label>
+  <textarea id="tok" placeholder="Paste the LOWLAW receipt here…"></textarea>
+  <button class="btn" id="go">🔎 Verify</button>
+
+  <div id="out" class="hide">
+    <div class="big" id="bigBox"><div class="k" id="bigK">—</div><div class="v" id="bigV">—</div></div>
+    <div class="card" id="detail"></div>
+    <div class="card o">
+      <b>What this page just did</b>
+      <p class="sm" id="means"></p>
+    </div>
+
+    <div class="card">
+      <b>Optional — check a file you have right now</b>
+      <p class="sm">Drop the file. If its hash matches the sealed hash, it is the same file, byte for byte.</p>
+      <div class="drop" id="drop">Drop a file to compare<input type="file" id="file" class="hide"></div>
+      <div id="cmp" class="mono hide"></div>
+    </div>
+  </div>
+
+  <div class="card r" style="margin-top:34px">
+    <b>🔴 Read this line carefully</b>
+    <p class="sm">Verification proves the receipt <b>has not been altered since it was signed</b>.
+    It does not endorse, confirm or vouch for whatever the sealed content says.
+    A notary works the same way — and any platform that blurs that line is worthless.</p>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+if(params.get('t')){ $('tok').value=params.get('t'); }
+
+let sealedHash=null;
+
+$('go').onclick=async()=>{
+  const token=$('tok').value.trim();
+  if(!token) return;
+  $('go').textContent='Checking…';
+  try{
+    const r=await fetch('/api/seal',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({action:'verify',token})});
+    const d=await r.json();
+    render(d);
+  }catch(e){
+    render({verified:false,means:'That receipt could not be read.'});
+  }
+  $('go').textContent='🔎 Verify';
+};
+
+function render(d){
+  $('out').classList.remove('hide');
+  const box=$('bigBox');
+  box.className='big '+(d.verified?'ok':'no');
+  $('bigK').textContent=d.verified?'VERIFIED':'NOT VERIFIED';
+  $('bigV').textContent=d.verified?'Signature valid':'Signature invalid';
+  $('means').textContent=d.means||'';
+  const p=d.payload;
+  $('detail').innerHTML = p ? `
+    <div class="kv"><span>Sealed at</span><span>${p.sealed_at}</span></div>
+    <div class="kv"><span>sha256</span><span>${p.sha256}</span></div>
+    <div class="kv"><span>Name</span><span>${p.name||'—'}</span></div>
+    <div class="kv"><span>Size</span><span>${p.bytes!=null?p.bytes.toLocaleString()+' bytes':'—'}</span></div>
+    <div class="kv"><span>Kind</span><span>${p.kind}</span></div>
+    <div class="kv"><span>Integrity</span><span>modified_by_lowlaw = ${p.modified_by_lowlaw}</span></div>
+    <div class="kv"><span>Schema</span><span>${p.schema}</span></div>`
+    : '<p class="sm">Nothing to show — the signature did not check out.</p>';
+  sealedHash = p ? p.sha256 : null;
+  $('out').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+const drop=$('drop'), fileEl=$('file');
+drop.onclick=()=>fileEl.click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=()=>drop.classList.remove('over');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');cmp(e.dataTransfer.files[0])};
+fileEl.onchange=e=>cmp(e.target.files[0]);
+
+async function cmp(f){
+  if(!f||!sealedHash) return;
+  const buf=await f.arrayBuffer();
+  const h=await crypto.subtle.digest('SHA-256',buf);
+  const hex=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  const same=hex===sealedHash;
+  $('cmp').classList.remove('hide');
+  $('cmp').textContent =
+    'this file   '+hex+'\nsealed hash '+sealedHash+'\n\n'+
+    (same ? '✅ Identical. This is the sealed file, byte for byte.'
+          : '❌ Different. This is not the file that was sealed.');
+}
+</script>
+</body>
+</html>
