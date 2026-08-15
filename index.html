@@ -224,6 +224,60 @@ body.guide [data-tip]{cursor:help}
 body.guide [data-tip]:hover{outline:2px dashed var(--bl);outline-offset:2px;border-radius:8px}
 @media(max-width:980px){.nav{display:none}.main{padding:20px}
   .vitals,.vitals.c4,.vitals.c3,.vitals.c6{grid-template-columns:1fr 1fr}.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* ================= MOBILE SHELL + COMMAND PALETTE ================= */
+.mobar{display:none}
+.pal{display:none}
+.tbsearch{font-size:15px}
+.palbox{background:#fff;width:100%;max-width:660px;display:flex;flex-direction:column;
+  height:100dvh;max-height:100dvh;overflow:hidden}
+.palhead{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.palhead .mag{font-size:17px}
+.palhead input{flex:1;border:0;outline:0;font-size:17px;font-family:inherit;color:var(--t1);background:transparent;min-width:0}
+.palx{font-size:11px;font-weight:800;color:var(--t3);background:var(--soft2);border:1px solid var(--border);
+  border-radius:8px;padding:4px 9px;cursor:pointer;flex-shrink:0}
+.pallist{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 0 calc(24px + env(safe-area-inset-bottom))}
+.palhint{padding:9px 16px;font-size:11.5px;color:var(--t3);border-top:1px solid var(--border);
+  background:var(--soft);flex-shrink:0}
+.palrow{display:flex;gap:11px;align-items:center;padding:10px 16px;cursor:pointer;min-height:48px}
+.palrow.sel{background:var(--brands)}
+.palrow em{font-style:normal;font-size:19px;flex-shrink:0;width:24px;text-align:center}
+.palrow .nm{font-weight:750;font-size:14.5px;line-height:1.35}
+.palrow .ds{font-size:12px;color:var(--t3);line-height:1.45;display:-webkit-box;-webkit-line-clamp:1;
+  -webkit-box-orient:vertical;overflow:hidden}
+.palrow .md{margin-left:auto;font-size:9.5px;font-weight:850;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--t3);background:var(--soft2);border:1px solid var(--border);border-radius:99px;padding:2px 8px;flex-shrink:0}
+.palempty{padding:28px 18px;color:var(--t3);font-size:13.5px}
+.pal.on{display:flex;position:fixed;inset:0;z-index:300;background:rgba(16,25,39,.42);
+  align-items:flex-start;justify-content:center}
+@media(min-width:700px){
+  .palbox{margin-top:8vh;height:auto;max-height:72vh;border-radius:16px;box-shadow:0 24px 60px rgba(16,25,39,.3)}
+}
+.mobar b{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  min-height:48px;font-size:10.5px;font-weight:750;color:var(--t3);cursor:pointer;border-radius:12px;
+  -webkit-tap-highlight-color:transparent;letter-spacing:-.01em}
+.mobar b i{font-style:normal;font-size:20px;line-height:1.05}
+.mobar b.on{color:var(--brand);background:var(--brands)}
+@media(max-width:980px){
+  .shell{min-height:calc(100dvh - 56px)}
+  .top{height:56px;padding:0 12px;gap:8px}
+  .logo{font-size:17px}
+  .csel{display:none!important}
+  .main{padding:16px 14px calc(100px + env(safe-area-inset-bottom));max-width:100%}
+  .tb,.av,.tbsearch{width:40px;height:40px}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;max-width:100%}
+  .mobar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:90;
+    background:rgba(255,255,255,.93);-webkit-backdrop-filter:saturate(180%) blur(14px);
+    backdrop-filter:saturate(180%) blur(14px);border-top:1px solid var(--border);
+    padding:5px 4px calc(5px + env(safe-area-inset-bottom));justify-content:space-around}
+}
+@media(max-width:640px){
+  .modesw{padding:2px}
+  .modesw div{padding:6px 9px;font-size:11.5px}
+  .gtoggle{display:none}
+  .main{padding-left:12px;padding-right:12px}
+}
+
 </style>
 </head>
 <body data-m="individual">
@@ -4218,6 +4272,118 @@ document.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
     o.classList.add('on');return;}
   o.classList.toggle('on');
 });
+
+/* ---------- mobile shell: bottom tabs + command palette ---------- */
+const MTABS={
+ individual:[['command','\u{1F4C1}','Case'],['capture','\u{1F4F8}','Capture'],['lookup','\u{1F50E}','Look up'],['action','\u{1F514}','Action'],['__pal','☰','More']],
+ provider:[['phome','\u{1F3DB}','Home'],['feed','\u{1F4E1}','Matters'],['review','\u{1F4E5}','Review'],['graph','\u{1F4CA}','Record'],['__pal','☰','More']],
+ expert:[['ehome','\u{1F52C}','Home'],['missions','\u{1F3AF}','Missions'],['askfield','\u{1F4AC}','Ask'],['earn','\u{1F4B5}','Earnings'],['__pal','☰','More']]
+};
+const mobar=document.getElementById('mobar');
+const pal=document.getElementById('pal'), palq=document.getElementById('palq'), pallist=document.getElementById('pallist');
+const MODENAME={individual:'You',provider:'Provider',expert:'Expert'};
+
+const PALIDX=[...document.querySelectorAll('.ni')].map(n=>{
+  const mode=n.classList.contains('m-prov')?'provider':n.classList.contains('m-exp')?'expert':'individual';
+  const sp=n.querySelector('span');
+  const raw=n.textContent.trim();
+  const icon=(raw.match(/^\S+/)||[''])[0];
+  const name=sp?sp.textContent.trim():raw;
+  const t=(typeof TIPS!=='undefined'&&TIPS[n.dataset.s])||null;
+  return {id:n.dataset.s,mode:mode,icon:icon,name:name,desc:t?t[1]:'',title:t?t[0]:name};
+}).filter(x=>x.id);
+
+let palSel=0, palRows=[];
+function palScore(it,q){
+  if(!q) return it.mode===(document.body.dataset.m||'individual')?2:1;
+  const n=it.name.toLowerCase(), d=(it.desc+' '+it.title).toLowerCase();
+  let s=0;
+  if(n.startsWith(q)) s=100; else if(n.includes(q)) s=70; else if(d.includes(q)) s=35; else return 0;
+  if(it.mode===(document.body.dataset.m||'individual')) s+=12;
+  return s;
+}
+function palRender(){
+  const q=palq.value.trim().toLowerCase();
+  palRows=PALIDX.map(it=>[palScore(it,q),it]).filter(x=>x[0]>0)
+    .sort((a,b)=>b[0]-a[0]).slice(0,60).map(x=>x[1]);
+  if(!palRows.length){pallist.innerHTML='<div class="palempty">Nothing matches that. Try &ldquo;evidence&rdquo;, &ldquo;deadline&rdquo;, &ldquo;expert&rdquo;, &ldquo;price&rdquo;.</div>';return;}
+  palSel=0;
+  pallist.innerHTML=palRows.map((it,i)=>
+    '<div class="palrow'+(i===0?' sel':'')+'" data-i="'+i+'"><em>'+it.icon+'</em><div><div class="nm">'+
+    it.name+'</div>'+(it.desc?'<div class="ds">'+it.desc+'</div>':'')+
+    '</div><span class="md">'+MODENAME[it.mode]+'</span></div>').join('');
+  pallist.querySelectorAll('.palrow').forEach(r=>r.onclick=()=>palPick(+r.dataset.i));
+}
+function palPick(i){
+  const it=palRows[i]; if(!it) return;
+  if(it.mode!==(document.body.dataset.m||'individual')){
+    const d=document.querySelector('#msw div[data-m="'+it.mode+'"]'); if(d) d.click();
+  }
+  closePal(); go(it.id);
+}
+function openPal(){pal.classList.add('on');document.body.style.overflow='hidden';palq.value='';palRender();setTimeout(()=>palq.focus(),40);}
+function closePal(){pal.classList.remove('on');document.body.style.overflow='';}
+document.getElementById('palx').onclick=closePal;
+pal.onclick=e=>{if(e.target===pal) closePal();};
+palq.addEventListener('input',palRender);
+palq.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closePal();return;}
+  if(e.key==='Enter'){e.preventDefault();palPick(palSel);return;}
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    palSel=Math.max(0,Math.min(palRows.length-1,palSel+(e.key==='ArrowDown'?1:-1)));
+    pallist.querySelectorAll('.palrow').forEach((r,i)=>r.classList.toggle('sel',i===palSel));
+    const el=pallist.querySelector('.palrow.sel'); if(el) el.scrollIntoView({block:'nearest'});
+  }
+});
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pal.classList.contains('on')?closePal():openPal();}
+});
+
+function buildTabs(){
+  const m=document.body.dataset.m||'individual';
+  mobar.innerHTML=(MTABS[m]||MTABS.individual).map(t=>'<b data-t="'+t[0]+'"><i>'+t[1]+'</i>'+t[2]+'</b>').join('');
+  mobar.querySelectorAll('b').forEach(b=>b.onclick=()=>{
+    if(b.dataset.t==='__pal'){openPal();return;}
+    go(b.dataset.t);
+  });
+  syncTabs();
+}
+function syncTabs(){
+  const cur=document.querySelector('.scr.on'); const id=cur?cur.id:'';
+  mobar.querySelectorAll('b').forEach(b=>b.classList.toggle('on',b.dataset.t===id));
+}
+const _go=go;
+go=function(id){_go(id);syncTabs();};
+const _msw=document.getElementById('msw');
+if(_msw) _msw.addEventListener('click',()=>setTimeout(buildTabs,0));
+
+/* top-bar search button */
+(function(){
+  const sp=document.querySelector('.top .sp');
+  if(!sp) return;
+  const b=document.createElement('div');
+  b.className='tb tbsearch'; b.title='Search all 99 screens (⌘K)';
+  b.textContent='\u{1F50E}';
+  b.onclick=openPal;
+  sp.parentNode.insertBefore(b,sp.nextSibling);
+})();
+
+/* touch: auto-dismiss tooltips */
+document.addEventListener('touchend',()=>{setTimeout(()=>{if(typeof tipEl!=='undefined') tipEl.classList.remove('on');},2400);},{passive:true});
+
+buildTabs();
+
 </script>
+
+<div class="mobar" id="mobar"></div>
+<div class="pal" id="pal">
+  <div class="palbox">
+    <div class="palhead"><span class="mag">&#128269;</span><input id="palq" placeholder="What do you want to do?" autocomplete="off" autocapitalize="off" spellcheck="false"><div class="palx" id="palx">Close</div></div>
+    <div class="pallist" id="pallist"></div>
+    <div class="palhint">All 99 screens are searchable here &middot; &#8984;K / Ctrl+K anywhere</div>
+  </div>
+</div>
+
 </body>
 </html>
