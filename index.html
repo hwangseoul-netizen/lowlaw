@@ -278,6 +278,24 @@ body.guide [data-tip]:hover{outline:2px dashed var(--bl);outline-offset:2px;bord
   .main{padding-left:12px;padding-right:12px}
 }
 
+
+/* ---- mobile polish v2 ---- */
+@media(max-width:980px){
+  html,body{overflow-x:hidden}
+  .stg{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .stg>div{flex-shrink:0}
+  .main>*{max-width:100%}
+  pre,code{white-space:pre-wrap;word-break:break-word}
+}
+@media(max-width:640px){
+  .modesw div .lbl{display:none}
+  .modesw div{padding:7px 10px;font-size:17px;line-height:1}
+  .top{gap:6px}
+  h1{font-size:26px!important;line-height:1.24}
+  h2{font-size:20px!important}
+  .vitals,.vitals.c3,.vitals.c4,.vitals.c6{grid-template-columns:1fr 1fr!important}
+}
+
 </style>
 </head>
 <body data-m="individual">
@@ -4382,6 +4400,14 @@ if(_msw) _msw.addEventListener('click',()=>setTimeout(buildTabs,0));
 document.addEventListener('touchend',()=>{setTimeout(()=>{if(typeof tipEl!=='undefined') tipEl.classList.remove('on');},2400);},{passive:true});
 
 buildTabs();
+
+
+/* mode switcher: emoji-only on small screens */
+document.querySelectorAll('#msw div').forEach(d=>{
+  const t=d.textContent.trim();
+  const sp=t.indexOf(' ');
+  if(sp>0) d.innerHTML=t.slice(0,sp)+'<span class="lbl"> '+t.slice(sp+1)+'</span>';
+});
 
 </script>
 
