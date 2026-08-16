@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Look Up Anyone — LOWLAW</title>
+<meta name="description" content="Search United States court records by name or company. Free, no account, all jurisdictions carried by CourtListener and RECAP.">
+<link rel="canonical" href="https://lowlaws.com/lookup.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232457D6'/%3E%3Ctext x='32' y='44' font-family='Helvetica,Arial' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#2457D6">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LOWLAW">
+<meta property="og:url" content="https://lowlaws.com/lookup.html">
+<meta property="og:title" content="Look Up Anyone — LOWLAW">
+<meta property="og:description" content="Search United States court records by name or company. Free, no account.">
+<meta property="og:image" content="https://lowlaws.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lowlaws.com/og.png">
+<style>
+:root{--canvas:#F5F7FA;--surface:#fff;--soft:#F1F4F8;--border:#DDE3EA;--border2:#C9D3E0;
+ --t1:#18212F;--t2:#445164;--t3:#667085;--brand:#2457D6;--brandh:#1D4ED8;--brands:#EFF6FF;
+ --gb:#ECFDF3;--gt:#067647;--gl:#ABEFC6;--ob:#FFF7ED;--ot:#9A3412;--ol:#FED7AA;
+ --rb:#FEF2F2;--rt:#B42318;--rl:#FECDCA;--sh:0 1px 3px rgba(24,33,47,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--canvas);color:var(--t1);font-size:15px;line-height:1.72;letter-spacing:-.004em;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.top{height:60px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;
+ padding:0 22px;gap:14px;box-shadow:var(--sh);position:sticky;top:0;z-index:20}
+.logo{font-weight:850;font-size:19px;letter-spacing:-.055em}.logo em{font-style:normal;color:var(--brand)}
+.sp{flex:1}
+.nav a{color:var(--t2);text-decoration:none;font-weight:700;font-size:14px;margin-left:18px}
+.nav a:hover{color:var(--brand)}
+.wrap{max-width:860px;margin:0 auto;padding:38px 22px 100px}
+h1{font-size:32px;letter-spacing:-.042em;line-height:1.2;margin-bottom:8px;font-weight:820}
+.lede{color:var(--t2);margin-bottom:22px;font-size:16px}
+.searchrow{display:flex;gap:10px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:240px;background:#fff;border:1px solid var(--border2);color:var(--t1);
+ border-radius:12px;padding:14px 16px;font-size:16px;font-family:inherit}
+input:focus{outline:2px solid #BFDBFE;border-color:var(--brand)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;border:0;
+ border-radius:12px;padding:14px 26px;font-size:15px;font-weight:750;cursor:pointer;font-family:inherit;min-height:48px}
+.btn:hover{background:var(--brandh)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.ex{font-size:12.5px;color:var(--t2);background:#fff;border:1px solid var(--border);border-radius:999px;
+ padding:5px 12px;cursor:pointer}
+.ex:hover{border-color:var(--brand);color:var(--brand)}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:12px 0;box-shadow:var(--sh)}
+.card.o{border-left:4px solid var(--ot);background:linear-gradient(90deg,var(--ob),#fff 45%)}
+.card.g{border-left:4px solid var(--gt);background:linear-gradient(90deg,var(--gb),#fff 45%)}
+.cn{font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.35}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;border:1px solid var(--border);
+ background:var(--soft);color:var(--t2)}
+.pill.open{background:var(--gb);border-color:var(--gl);color:var(--gt)}
+.pill.term{background:var(--soft);color:var(--t3)}
+.kv{display:flex;gap:10px;font-size:13.5px;padding:5px 0;border-bottom:1px solid var(--border)}
+.kv:last-of-type{border:0}
+.kv b{color:var(--t3);font-weight:700;min-width:120px;flex-shrink:0}
+.sm{font-size:13.5px;color:var(--t2)}.xs{font-size:12.5px;color:var(--t3)}
+a.src{color:var(--brand);font-weight:700;text-decoration:none;font-size:13px}
+.hide{display:none}
+.count{font-size:13.5px;color:var(--t2);margin:16px 0 4px;font-weight:650}
+@media(max-width:640px){.wrap{padding:24px 14px 90px}h1{font-size:26px}.kv b{min-width:96px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo">LOW<em>LAW</em></div>
+  <div class="sp"></div>
+  <nav class="nav"><a href="/">App</a><a href="/seal.html">Seal</a><a href="/verify.html">Verify</a></nav>
+</div>
+
+<div class="wrap">
+  <h1>Look up anyone.</h1>
+  <p class="lede">United States court records, searched by a human instead of a lawyer.
+  <b>Free. No account. All jurisdictions</b> carried by CourtListener and RECAP — federal and state, nationwide.</p>
+
+  <div class="searchrow">
+    <input type="text" id="q" placeholder="A person, a company, a landlord, a contractor…" autocomplete="off">
+    <button class="btn" id="go">🔎 Search</button>
+  </div>
+  <div class="chips">
+    <span class="ex">Acme Corp</span>
+    <span class="ex">Wells Fargo</span>
+    <span class="ex">Purdue Pharma</span>
+    <span class="ex">Uber Technologies</span>
+  </div>
+
+  <p class="xs" id="status" style="margin-top:14px"></p>
+  <div id="out"></div>
+
+  <div class="card o" style="margin-top:30px">
+    <b>🟠 What this is, and what it is not</b>
+    <p class="sm">These are <b>public court records</b>. A name appearing here is not an accusation, a judgment,
+    or a finding of any kind — people appear in court records as plaintiffs, defendants, witnesses and creditors,
+    and most cases end without anyone being found to have done anything wrong.</p>
+    <p class="sm" style="margin-top:8px"><b>LOWLAW is not a law firm and does not give legal advice.</b>
+    We do not interpret these records, score anyone, or tell you what to do about them. We just make public
+    records findable.</p>
+  </div>
+
+  <div class="card">
+    <b>Coverage, honestly</b>
+    <p class="sm">Source: <b>CourtListener / RECAP</b>, run by the non-profit Free Law Project.
+    Federal coverage is deep. State and county coverage varies a great deal by jurisdiction — a blank result
+    means <b>nothing was found in this dataset</b>, not that nothing exists. Records are also added over time,
+    so a search today and the same search next month can differ.</p>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.querySelectorAll('.ex').forEach(e=>e.onclick=()=>{$('q').value=e.textContent;run();});
+$('go').onclick=run;
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter')run();});
+
+async function run(){
+  const q=$('q').value.trim();
+  if(q.length<2){$('status').textContent='Type at least two characters.';return;}
+  $('go').disabled=true; $('status').textContent='Searching public court records nationwide…'; $('out').innerHTML='';
+  try{
+    const r=await fetch('/api/lookup?q='+encodeURIComponent(q));
+    const d=await r.json();
+    if(!r.ok){$('status').textContent=d.error||'Something went wrong.';$('go').disabled=false;return;}
+    render(d);
+  }catch(e){ $('status').textContent='Could not reach the search service.'; }
+  $('go').disabled=false;
+}
+
+function render(d){
+  if(!d.results.length){
+    $('status').textContent='';
+    $('out').innerHTML='<div class="card"><b>Nothing found in this dataset.</b>'+
+      '<p class="sm">That is not the same as "no records exist." Coverage varies by court — try a fuller legal name, '+
+      'a company\'s registered name, or a different spelling.</p></div>';
+    return;
+  }
+  $('status').textContent='';
+  const head='<p class="count">'+d.total_matches.toLocaleString()+' matching records nationwide · showing '+d.returned+
+    ' most recently filed</p>';
+  $('out').innerHTML = head + d.results.map(x=>{
+    const rows=[];
+    if(x.court) rows.push(['Court', esc(x.court)+(x.court_short?' <span class="xs">('+esc(x.court_short)+')</span>':'')]);
+    if(x.docket_number) rows.push(['Docket', esc(x.docket_number)]);
+    if(x.date_filed) rows.push(['Filed', esc(x.date_filed)]);
+    if(x.date_terminated) rows.push(['Terminated', esc(x.date_terminated)]);
+    if(x.judge) rows.push(['Judge', esc(x.judge)]);
+    if(x.nature_of_suit) rows.push(['Nature of suit', esc(x.nature_of_suit)]);
+    if(x.cause) rows.push(['Cause', esc(x.cause)]);
+    if(x.jurisdiction) rows.push(['Jurisdiction', esc(x.jurisdiction)]);
+    if(x.bankruptcy_chapter) rows.push(['Bankruptcy', 'Chapter '+esc(x.bankruptcy_chapter)]);
+    if(x.parties && x.parties.length) rows.push(['Parties', x.parties.map(esc).join(' · ')]);
+    if(x.attorneys && x.attorneys.length) rows.push(['Counsel of record', x.attorneys.map(esc).join(' · ')]);
+    if(x.firms && x.firms.length) rows.push(['Firms', x.firms.map(esc).join(' · ')]);
+    return '<div class="card"><div class="cn">'+esc(x.case_name||'(no case name)')+'</div>'+
+      '<div class="meta"><span class="pill '+(x.status==='Open'?'open':'term')+'">'+esc(x.status)+'</span>'+
+      (x.court_short?'<span class="pill">'+esc(x.court_short)+'</span>':'')+
+      (x.date_filed?'<span class="pill">Filed '+esc(x.date_filed)+'</span>':'')+'</div>'+
+      '<div style="margin-top:10px">'+rows.map(r=>'<div class="kv"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>').join('')+'</div>'+
+      (x.source_url?'<p style="margin-top:10px"><a class="src" href="'+esc(x.source_url)+'" target="_blank" rel="noopener">Open the full docket on CourtListener →</a></p>':'')+
+      '</div>';
+  }).join('');
+}
+</script>
+</body>
+</html>
