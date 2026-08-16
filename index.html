@@ -839,13 +839,29 @@ recovery counsel · consumer attorney · bank dispute</div>
   <p class="lede">Your future landlord. The contractor bidding on your kitchen. The company about to hire you.
   The lawyer someone recommended. <b>US court dockets are public record</b> — we made them searchable by a human.</p>
   <div class="card b" style="padding:26px">
-    <div style="display:flex;gap:10px">
-      <input value="ABC Corp." style="font-size:17px;padding:15px 18px;border-radius:12px;border:2px solid var(--border2)">
-      <button class="btn" style="margin:0;padding:15px 26px" onclick="go('entity')">Search</button></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <input id="lkq" placeholder="A person, a company, a landlord, a contractor…" autocomplete="off"
+        style="flex:1;min-width:230px;font-size:17px;padding:15px 18px;border-radius:12px;border:2px solid var(--border2)">
+      <button class="btn" id="lkgo" style="margin:0;padding:15px 26px">🔎 Search</button></div>
     <div class="chips" style="margin-top:14px">
-      <span class="chip">🏢 Businesses</span><span class="chip">🏠 Landlords</span><span class="chip">🔨 Contractors</span>
-      <span class="chip">⚖️ Attorneys</span><span class="chip">👨‍⚖️ Judges</span><span class="chip">👤 People</span></div>
-    <p class="xs" style="margin-top:12px">Free. No account. Nothing about you is stored to run a search.</p></div>
+      <span class="chip lkex">Wells Fargo</span><span class="chip lkex">Purdue Pharma</span>
+      <span class="chip lkex">Uber Technologies</span><span class="chip lkex">Acme Corp</span></div>
+    <div class="chips" style="margin-top:10px">
+      <span class="xs" style="align-self:center;margin-right:2px">Order:</span>
+      <span class="chip lksort b" data-sort="relevance">Best match</span>
+      <span class="chip lksort" data-sort="date">Newest filed</span></div>
+    <p class="xs" style="margin-top:12px">Live, nationwide, every jurisdiction carried by CourtListener and RECAP.
+    Free. No account. Nothing about you is stored to run a search.</p></div>
+
+  <p class="xs" id="lkstatus" style="margin-top:6px"></p>
+  <div id="lkout"></div>
+
+  <div class="card o">
+    <b>🟠 What this is, and what it is not</b>
+    <p class="sm">These are <b>public court records</b>. A name appearing here is not an accusation, a judgment,
+    or a finding of any kind — people appear as plaintiffs, defendants, witnesses and creditors, and most cases
+    end without anyone being found to have done anything wrong. <b>LOWLAW does not interpret them and does not
+    give legal advice.</b> A blank result means nothing was found in this dataset, not that nothing exists.</p></div>
 
   <h2>🧊 Why this kills the cold start<span class="new kev">KEVIN</span></h2>
   <div class="card g">
@@ -4872,6 +4888,77 @@ document.querySelectorAll('#msw div').forEach(d=>{
 if(typeof MTABS!=='undefined'){
   MTABS.provider=[['phome','\u{1F3DB}','Home'],['feed','\u{1F4E1}','Deals'],['review','\u{1F4E5}','Review'],['catalog','\u{1F4BC}','Services'],['__pal','☰','More']];
   buildTabs();
+}
+
+
+/* ---- Look Up Anyone: live national court record search ---- */
+var LKSORT='relevance';
+(function(){
+  var q=document.getElementById('lkq'), go=document.getElementById('lkgo');
+  if(!q||!go) return;
+  go.onclick=lkRun;
+  q.addEventListener('keydown',function(e){if(e.key==='Enter')lkRun();});
+  Array.prototype.forEach.call(document.querySelectorAll('.lkex'),function(e){
+    e.onclick=function(){q.value=e.textContent;lkRun();};});
+  Array.prototype.forEach.call(document.querySelectorAll('.lksort'),function(e){
+    e.onclick=function(){
+      LKSORT=e.dataset.sort;
+      Array.prototype.forEach.call(document.querySelectorAll('.lksort'),function(x){x.classList.toggle('b',x===e);});
+      if(q.value.trim().length>1) lkRun();};});
+})();
+function lkEsc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+async function lkRun(){
+  var q=document.getElementById('lkq'), st=document.getElementById('lkstatus'),
+      out=document.getElementById('lkout'), go=document.getElementById('lkgo');
+  var v=q.value.trim();
+  if(v.length<2){st.textContent='Type at least two characters.';return;}
+  go.disabled=true; st.textContent='Searching public court records nationwide…'; out.innerHTML='';
+  try{
+    var r=await fetch('/api/lookup?q='+encodeURIComponent(v)+'&sort='+LKSORT);
+    var d=await r.json();
+    if(!r.ok){st.textContent=d.error||'Something went wrong.';go.disabled=false;return;}
+    lkRender(d);
+  }catch(e){ st.textContent='Could not reach the search service.'; }
+  go.disabled=false;
+}
+function lkRender(d){
+  var st=document.getElementById('lkstatus'), out=document.getElementById('lkout');
+  st.textContent='';
+  if(!d.results||!d.results.length){
+    out.innerHTML='<div class="card"><b>Nothing found in this dataset.</b>'+
+      '<p class="sm">That is not the same as \u201cno records exist.\u201d Coverage varies by court \u2014 try a fuller '+
+      'legal name, a company\u2019s registered name, or a different spelling.</p></div>';
+    return;
+  }
+  var head='<p class="xs" style="margin:14px 0 4px;font-weight:650">'+d.total_matches.toLocaleString()+
+    ' matching records nationwide \u00b7 showing '+d.returned+(d.sort==='date'?' most recently filed':' closest matches')+'</p>';
+  out.innerHTML=head+d.results.map(function(x){
+    var rows=[];
+    if(x.court) rows.push(['Court', lkEsc(x.court)+(x.court_short?' <span class="xs">('+lkEsc(x.court_short)+')</span>':'')]);
+    if(x.docket_number) rows.push(['Docket', lkEsc(x.docket_number)]);
+    if(x.date_filed) rows.push(['Filed', lkEsc(x.date_filed)]);
+    if(x.date_terminated) rows.push(['Terminated', lkEsc(x.date_terminated)]);
+    if(x.judge) rows.push(['Judge', lkEsc(x.judge)]);
+    if(x.nature_of_suit) rows.push(['Nature of suit', lkEsc(x.nature_of_suit)]);
+    if(x.cause) rows.push(['Cause', lkEsc(x.cause)]);
+    if(x.jurisdiction) rows.push(['Jurisdiction', lkEsc(x.jurisdiction)]);
+    if(x.bankruptcy_chapter) rows.push(['Bankruptcy', 'Chapter '+lkEsc(x.bankruptcy_chapter)]);
+    if(x.parties&&x.parties.length) rows.push(['Parties', x.parties.map(lkEsc).join(' \u00b7 ')]);
+    if(x.attorneys&&x.attorneys.length) rows.push(['Counsel of record', x.attorneys.map(lkEsc).join(' \u00b7 ')]);
+    if(x.firms&&x.firms.length) rows.push(['Firms', x.firms.map(lkEsc).join(' \u00b7 ')]);
+    return '<div class="card"><div style="font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.35">'+
+      lkEsc(x.case_name||'(no case name)')+'</div>'+
+      '<div class="chips" style="margin-top:8px"><span class="chip '+(x.status==='Open'?'g':'')+'">'+lkEsc(x.status)+'</span>'+
+      (x.court_short?'<span class="chip">'+lkEsc(x.court_short)+'</span>':'')+
+      (x.date_filed?'<span class="chip">Filed '+lkEsc(x.date_filed)+'</span>':'')+'</div>'+
+      '<div style="margin-top:10px">'+rows.map(function(r){
+        return '<div style="display:flex;gap:10px;font-size:13.5px;padding:5px 0;border-bottom:1px solid var(--border)">'+
+        '<b style="color:var(--t3);font-weight:700;min-width:120px;flex-shrink:0">'+r[0]+'</b><span>'+r[1]+'</span></div>';}).join('')+'</div>'+
+      (x.source_url?'<p style="margin-top:10px"><a href="'+lkEsc(x.source_url)+'" target="_blank" rel="noopener" '+
+        'style="color:var(--brand);font-weight:700;text-decoration:none;font-size:13px">Open the full docket on CourtListener \u2192</a></p>':'')+
+      '</div>';
+  }).join('');
 }
 
 </script>
