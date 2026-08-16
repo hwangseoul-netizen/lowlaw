@@ -44,6 +44,7 @@ input:focus{outline:2px solid #BFDBFE;border-color:var(--brand)}
 .ex{font-size:12.5px;color:var(--t2);background:#fff;border:1px solid var(--border);border-radius:999px;
  padding:5px 12px;cursor:pointer}
 .ex:hover{border-color:var(--brand);color:var(--brand)}
+.ex.on{background:var(--brands);border-color:var(--brand);color:var(--brand);font-weight:750}
 .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:12px 0;box-shadow:var(--sh)}
 .card.o{border-left:4px solid var(--ot);background:linear-gradient(90deg,var(--ob),#fff 45%)}
 .card.g{border-left:4px solid var(--gt);background:linear-gradient(90deg,var(--gb),#fff 45%)}
@@ -86,6 +87,12 @@ a.src{color:var(--brand);font-weight:700;text-decoration:none;font-size:13px}
     <span class="ex">Uber Technologies</span>
   </div>
 
+  <div class="chips" style="margin-top:10px">
+    <span class="xs" style="align-self:center;margin-right:2px">Order:</span>
+    <span class="ex sort on" data-sort="relevance">Best match</span>
+    <span class="ex sort" data-sort="date">Newest filed</span>
+  </div>
+
   <p class="xs" id="status" style="margin-top:14px"></p>
   <div id="out"></div>
 
@@ -111,7 +118,13 @@ a.src{color:var(--brand);font-weight:700;text-decoration:none;font-size:13px}
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-document.querySelectorAll('.ex').forEach(e=>e.onclick=()=>{$('q').value=e.textContent;run();});
+let SORT='relevance';
+document.querySelectorAll('.ex:not(.sort)').forEach(e=>e.onclick=()=>{$('q').value=e.textContent;run();});
+document.querySelectorAll('.ex.sort').forEach(e=>e.onclick=()=>{
+  SORT=e.dataset.sort;
+  document.querySelectorAll('.ex.sort').forEach(x=>x.classList.toggle('on',x===e));
+  if($('q').value.trim().length>1) run();
+});
 $('go').onclick=run;
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter')run();});
 
@@ -120,7 +133,7 @@ async function run(){
   if(q.length<2){$('status').textContent='Type at least two characters.';return;}
   $('go').disabled=true; $('status').textContent='Searching public court records nationwide…'; $('out').innerHTML='';
   try{
-    const r=await fetch('/api/lookup?q='+encodeURIComponent(q));
+    const r=await fetch('/api/lookup?q='+encodeURIComponent(q)+'&sort='+SORT);
     const d=await r.json();
     if(!r.ok){$('status').textContent=d.error||'Something went wrong.';$('go').disabled=false;return;}
     render(d);
@@ -138,7 +151,7 @@ function render(d){
   }
   $('status').textContent='';
   const head='<p class="count">'+d.total_matches.toLocaleString()+' matching records nationwide · showing '+d.returned+
-    ' most recently filed</p>';
+    (d.sort==='date'?' most recently filed':' closest matches')+'</p>';
   $('out').innerHTML = head + d.results.map(x=>{
     const rows=[];
     if(x.court) rows.push(['Court', esc(x.court)+(x.court_short?' <span class="xs">('+esc(x.court_short)+')</span>':'')]);
