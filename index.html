@@ -296,6 +296,23 @@ body.guide [data-tip]:hover{outline:2px dashed var(--bl);outline-offset:2px;bord
   .vitals,.vitals.c3,.vitals.c4,.vitals.c6{grid-template-columns:1fr 1fr!important}
 }
 
+
+/* ---- attribution chips: hidden in product view, toggleable ---- */
+body:not(.credits) .new{display:none!important}
+.ctoggle{display:flex;align-items:center;gap:6px;background:var(--soft2);border:1px solid var(--border);
+  border-radius:99px;padding:5px 11px;font-size:12px;font-weight:750;cursor:pointer;color:var(--t3);user-select:none}
+.ctoggle.on{background:var(--pb);border-color:var(--pl);color:var(--pt)}
+/* ---- prototype / sample-data strip ---- */
+.demobar{position:sticky;top:60px;z-index:70;display:flex;align-items:center;gap:10px;
+  background:var(--ob);border-bottom:1px solid var(--ol);color:var(--ot);
+  padding:7px 20px;font-size:12.5px;font-weight:650;letter-spacing:-.005em}
+.demobar b{font-weight:850}
+.demobar .x{margin-left:auto;cursor:pointer;font-weight:850;padding:0 6px;opacity:.65}
+.demobar .x:hover{opacity:1}
+body.nodemo .demobar{display:none}
+@media(max-width:980px){.demobar{top:56px;padding:7px 14px;font-size:12px}.ctoggle{display:none}}
+@media(max-width:640px){.demobar .lg{display:none}}
+
 </style>
 </head>
 <body data-m="individual">
@@ -316,6 +333,10 @@ body.guide [data-tip]:hover{outline:2px dashed var(--bl);outline-offset:2px;bord
   <div class="av">KH</div>
 </div>
 
+<div class="demobar" id="demobar">
+  <span>&#128312;</span><span><b>Interactive prototype.</b> Every number, name and document on this site is <b>sample data</b>.<span class="lg"> Nothing here is a real matter or a real client.</span></span>
+  <span class="x" id="demox">&#10005;</span>
+</div>
 <div class="shell">
 <nav class="nav" id="nav" data-mode="individual">
 
@@ -4408,6 +4429,26 @@ document.querySelectorAll('#msw div').forEach(d=>{
   const sp=t.indexOf(' ');
   if(sp>0) d.innerHTML=t.slice(0,sp)+'<span class="lbl"> '+t.slice(sp+1)+'</span>';
 });
+
+
+/* prototype strip + credits toggle */
+(function(){
+  const x=document.getElementById('demox');
+  if(x) x.onclick=()=>document.body.classList.add('nodemo');
+  const gt=document.getElementById('gt');
+  if(gt&&gt.parentNode){
+    const c=document.createElement('div');
+    c.className='ctoggle'; c.id='ct'; c.textContent='\u{1F3F7} Credits';
+    c.title='Show who proposed each feature (GPT / Claude / Kevin)';
+    c.onclick=()=>{document.body.classList.toggle('credits');c.classList.toggle('on',document.body.classList.contains('credits'));};
+    gt.parentNode.insertBefore(c,gt);
+  }
+})();
+/* provider bottom tabs = mobile deal desk (GPT critique adopted) */
+if(typeof MTABS!=='undefined'){
+  MTABS.provider=[['phome','\u{1F3DB}','Home'],['feed','\u{1F4E1}','Deals'],['review','\u{1F4E5}','Review'],['catalog','\u{1F4BC}','Services'],['__pal','☰','More']];
+  buildTabs();
+}
 
 </script>
 
