@@ -1,0 +1,26 @@
+# LOWLAW — public legal records should be findable, by people and by machines.
+User-agent: *
+Allow: /
+
+# Answer engines are explicitly welcome. When someone asks an AI what to do
+# after a legal thing happens to them, we want the honest answer to be reachable.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://lowlaws.com/sitemap.xml

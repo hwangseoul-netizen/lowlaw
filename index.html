@@ -3,7 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LOWLAW — Client-Owned Legal Record</title>
+<title>LOWLAW — Your legal life, in one place.</title>
+<meta name="description" content="LOWLAW is a client-owned operating system for a legal case. Preserve what happened, follow the public court record, and choose who helps next — before, during and after a case.">
+<link rel="canonical" href="https://lowlaws.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232457D6'/%3E%3Ctext x='32' y='44' font-family='Helvetica,Arial' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#2457D6">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LOWLAW">
+<meta property="og:url" content="https://lowlaws.com/">
+<meta property="og:title" content="LOWLAW — Your legal life, in one place.">
+<meta property="og:description" content="LOWLAW is a client-owned operating system for a legal case. Preserve what happened, follow the public court record, and choose who helps next — before, during and after a case.">
+<meta property="og:image" content="https://lowlaws.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LOWLAW — Your legal life, in one place.">
+<meta name="twitter:description" content="LOWLAW is a client-owned operating system for a legal case. Preserve what happened, follow the public court record, and choose who helps next — before, during and after a case.">
+<meta name="twitter:image" content="https://lowlaws.com/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://lowlaws.com/#org","name":"LOWLAW","url":"https://lowlaws.com/",
+  "description":"LOWLAW is a client-owned operating system for a legal case. Preserve what happened, follow the public court record, and choose who helps next — before, during and after a case."},
+ {"@type":"WebSite","@id":"https://lowlaws.com/#site","url":"https://lowlaws.com/","name":"LOWLAW",
+  "publisher":{"@id":"https://lowlaws.com/#org"}},
+ {"@type":"SoftwareApplication","name":"LOWLAW","applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web, iOS, Android","url":"https://lowlaws.com/","description":"LOWLAW is a client-owned operating system for a legal case. Preserve what happened, follow the public court record, and choose who helps next — before, during and after a case.",
+  "featureList":"Evidence sealing with verifiable timestamps, public court record lookup, portable case file, legal provider marketplace, expert attestations"}
+]}
+</script>
 <style>
 :root{
   --canvas:#F5F7FA; --surface:#FFFFFF; --soft:#FAFBFC; --soft2:#F1F4F8;
@@ -489,6 +517,40 @@ body.nodemo .demobar{display:none}
     <h1 style="font-size:38px;margin:6px 0">Your legal life, in one place.</h1>
     <p style="font-size:17px;color:var(--t2);font-weight:600">Record what happened. Own your case. Choose who helps next.</p>
     <p style="font-size:13px;color:var(--t3);font-weight:700;letter-spacing:.02em;margin-top:4px">Before a case. During a case. After a case.</p>
+  </div>
+
+  <div class="card" style="margin:0 0 14px;padding:22px 24px;border-color:var(--border2)">
+    <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);font-weight:850">Start here</p>
+    <h2 style="margin:2px 0 4px;font-size:26px">What happened?</h2>
+    <p class="sm" style="margin-bottom:14px">Pick the situation, not the feature. No account needed to begin.</p>
+    <div class="g2" style="gap:10px">
+      <div class="opt" onclick="event.stopPropagation();go('mailroom')" style="cursor:pointer">
+        📄 <b>I received something legal</b><br><span class="xs">A letter, a summons, a demand, a notice</span></div>
+      <div class="opt" onclick="event.stopPropagation();go('import')" style="cursor:pointer">
+        📁 <b>I already have a court case</b><br><span class="xs">Import it from the public docket in 30 seconds</span></div>
+      <div class="opt" onclick="event.stopPropagation();go('moment')" style="cursor:pointer">
+        🛟 <b>I want to save something that happened</b><br><span class="xs">It is not a case until you say it is</span></div>
+      <div class="opt" onclick="event.stopPropagation();go('lookup')" style="cursor:pointer">
+        🔎 <b>I want to check a person or company</b><br><span class="xs">Public court records · free · no account</span></div>
+      <div class="opt" onclick="event.stopPropagation();go('forsomeone')" style="cursor:pointer">
+        🎁 <b>I have something that may help someone else</b><br><span class="xs">Preserve it for them in five seconds</span></div>
+      <div class="opt" onclick="event.stopPropagation();openPal()" style="cursor:pointer">
+        🤔 <b>Not sure</b><br><span class="xs">Search everything LOWLAW can do</span></div>
+    </div>
+  </div>
+
+  <div class="card g" style="margin:0 0 14px;padding:20px 24px">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:24px">🔒</span>
+      <div style="flex:1;min-width:240px">
+        <b style="font-size:17px">One thing on this site is not a prototype.</b>
+        <p class="sm" style="margin:2px 0 0">Seal a real file right now — your device computes the hash,
+        our server signs the hash and the time, <b>never the content</b>. Anyone can verify it afterwards
+        without an account.</p>
+      </div>
+      <a class="btn" href="/seal.html" style="text-decoration:none">🔒 Seal something</a>
+      <a class="btn gh" href="/verify.html" style="text-decoration:none;background:#fff;border:1px solid var(--border2);color:var(--t1)">🔎 Verify a receipt</a>
+    </div>
   </div>
 
   <div class="card o" style="margin:0 0 12px;cursor:pointer" onclick="go('action')">
@@ -4506,6 +4568,21 @@ One file. Four revenue lines. Zero percent of anyone's legal fees.</div>
 
 </main>
 </div>
+
+<footer style="border-top:1px solid var(--border);background:var(--surface);padding:22px 20px 34px;
+  margin-top:20px;font-size:12.5px;color:var(--t3);text-align:center">
+  <p><b style="color:var(--t2)">LOWLAW</b> — Evidence establishes what exists. Experts explain what it means.
+  Legal professionals decide what to do. LOWLAW keeps the whole case together.</p>
+  <p style="margin-top:8px">
+    <a href="/seal.html" style="color:var(--brand);font-weight:700;text-decoration:none">Seal a record</a> ·
+    <a href="/verify.html" style="color:var(--brand);font-weight:700;text-decoration:none">Verify a seal</a> ·
+    <a href="https://github.com/hwangseoul-netizen/lowlaw" style="color:var(--brand);font-weight:700;text-decoration:none">Source</a>
+  </p>
+  <p style="margin-top:8px;max-width:720px;margin-left:auto;margin-right:auto">
+    Interactive prototype. All figures, names and documents shown are sample data.
+    <b>LOWLAW is not a law firm and does not give legal advice.</b>
+    A seal proves that content existed at a moment and has not changed since — it says nothing about whether it is true.</p>
+</footer>
 
 <div class="mobar" id="mobar"></div>
 <div class="pal" id="pal">

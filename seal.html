@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LOWLAW — Seal a record</title>
 <meta name="description" content="Seal a file or a piece of text. Your device computes the hash. Our server signs the hash and the time — never the content.">
+<link rel="canonical" href="https://lowlaws.com/seal.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232457D6'/%3E%3Ctext x='32' y='44' font-family='Helvetica,Arial' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#2457D6">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LOWLAW">
+<meta property="og:url" content="https://lowlaws.com/seal.html">
+<meta property="og:title" content="LOWLAW — Seal a record">
+<meta property="og:description" content="Seal a file or a piece of text. Your device computes the hash. Our server signs the hash and the time — never the content.">
+<meta property="og:image" content="https://lowlaws.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lowlaws.com/og.png">
 <style>
 :root{--canvas:#F5F7FA;--surface:#fff;--soft:#F1F4F8;--border:#DDE3EA;--border2:#C9D3E0;
  --t1:#18212F;--t2:#445164;--t3:#667085;--brand:#2457D6;--brandh:#1D4ED8;--brands:#EFF6FF;
@@ -124,6 +135,13 @@ input:focus,textarea:focus{outline:2px solid #BFDBFE;border-color:var(--brand)}
     </div>
   </div>
 
+  <div class="card o" style="margin-top:14px">
+    <b>🟠 Prototype signing key</b>
+    <p class="sm">This build signs with a <b>demo key that is published in the open source</b>, so anyone can
+    reproduce it. Receipts issued now prove the mechanism works — they carry no weight, and they stop verifying
+    when the key is rotated to a hardware-backed one before real use. We would rather say this than let a
+    receipt imply more than it proves.</p>
+  </div>
   <div class="card o" style="margin-top:34px">
     <b>🟠 What a seal proves, and what it doesn't</b>
     <p class="sm">It proves this exact content existed at this exact moment, and hasn't changed since.
