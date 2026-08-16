@@ -491,6 +491,16 @@ body.nodemo .demobar{display:none}
     <p style="font-size:13px;color:var(--t3);font-weight:700;letter-spacing:.02em;margin-top:4px">Before a case. During a case. After a case.</p>
   </div>
 
+  <div class="card o" style="margin:0 0 12px;cursor:pointer" onclick="go('action')">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:22px">🔔</span>
+      <span style="font-size:17px;font-weight:800;letter-spacing:-.02em">3 things need your attention</span>
+      <span class="chip o">Notice of appeal — 18 days</span>
+      <span class="chip b">1 offer waiting</span>
+      <span class="chip">Invoice to review</span>
+      <span style="margin-left:auto;font-weight:750;color:var(--brand)">Open Action Center →</span>
+    </div>
+  </div>
   <div class="vitals c4" style="margin-bottom:6px">
     <div class="vt g"><div class="k">Protected records</div><div class="v">18</div></div>
     <div class="vt b"><div class="k">Active matters</div><div class="v">3</div></div>
@@ -4223,6 +4233,87 @@ One file. Four revenue lines. Zero percent of anyone's legal fees.</div>
   </table>
   <p class="xs">A case file ends when the case ends. <b>A legal life does not.</b> That is the difference.</p></div>
 
+  <h2>🩺 Vault Health</h2>
+  <div class="card g"><p class="sm">A bank tells you the account is fine. A vault should tell you
+  <b>whether what is inside is actually recoverable</b> — not just that it exists.</p>
+  <table style="margin-top:8px">
+    <tr><td style="width:62%">Seal chain re-verified</td><td><b>1,284 / 1,284</b> ✓ <span class="xs">Aug 15</span></td></tr>
+    <tr><td>Recovery method last tested</td><td><b>42 days ago</b> ✓ <span class="chip">Test again</span></td></tr>
+    <tr><td>Incomplete uploads</td><td><b>0</b> ✓</td></tr>
+    <tr><td>Orphaned encrypted records</td><td><b>0</b> ✓</td></tr>
+    <tr style="border:0"><td style="border:0">Unknown active sessions</td><td style="border:0"><b>0</b> ✓ <span class="chip">Review devices</span></td></tr>
+  </table>
+  <p class="xs">We can re-verify every seal you hold, cheaply, forever — because a seal is self-contained.
+  <b>No other vault can show you this line.</b></p></div>
+
+  <h2>🧬 Where this came from</h2>
+  <div class="card p"><p class="sm">You already have <b>Where Records Went</b>. This is the other half.
+  Together they make one unbroken chain: <b>where it came from → what happened to it → where it went.</b></p>
+  <table style="margin-top:8px">
+    <tr><td style="width:34%">Created by</td><td>You · Aug 02, 2026 · 4:21 PM</td></tr>
+    <tr><td>Captured on</td><td>iPhone · on-device hash, never uploaded in the clear</td></tr>
+    <tr><td>Received via</td><td>Evidence Gift — <span class="chip p">contributor identity verified privately</span></td></tr>
+    <tr><td>Original hash</td><td><span class="xs" style="font-family:ui-monospace">f4ee956d…04cec16</span></td></tr>
+    <tr><td>Annotated copy</td><td>Created Aug 09 — original untouched, both sealed</td></tr>
+    <tr style="border:0"><td style="border:0">Used in</td><td style="border:0">Expert Attestation #EA-42</td></tr>
+  </table>
+  <p class="xs"><b>And what we cannot tell you:</b> for anything received from someone else, we can attest to
+  what happened <i>after</i> it reached us — never before. We say so on the record rather than letting
+  the chain imply more than it proves.</p></div>
+
+  <h2>🗑️ Keep or remove</h2>
+  <div class="card"><p class="sm">If it is really yours, you must be able to <b>destroy</b> it too — and understand
+  exactly what destruction does and does not reach.</p>
+  <table style="margin-top:8px">
+    <tr><td style="width:40%">Keep forever</td><td>Default</td></tr>
+    <tr><td>Export, then remove</td><td>You take it, we stop holding it</td></tr>
+    <tr><td>Delete local copy only</td><td>Frees the device, keeps the vault</td></tr>
+    <tr><td>Delete the LOWLAW copy</td><td>We no longer hold the encrypted object</td></tr>
+    <tr><td>Remove shared access</td><td>Cuts future access, not past copies</td></tr>
+    <tr style="border:0"><td style="border:0">Scheduled deletion</td><td style="border:0">Set a date now, forget about it</td></tr>
+  </table></div>
+  <div class="card o"><b>🟠 What deletion cannot reach — said plainly</b>
+  <table style="margin-top:8px">
+    <tr><td style="width:44%">A seal receipt someone else holds</td><td>Stays verifiable. It is self-contained by design.</td></tr>
+    <tr><td>A copy an authorised recipient exported</td><td>Already theirs. We cannot reach into their device.</td></tr>
+    <tr style="border:0"><td style="border:0">A public court record</td><td style="border:0">Belongs to the court, not to us or to you.</td></tr>
+  </table>
+  <p class="xs">Deleting your vault copy does not delete a copy already exported by another authorised recipient.
+  Anyone who tells you otherwise is selling you something.</p></div>
+
+  <h2>🧊 Emergency Freeze</h2>
+  <div class="card r"><p class="sm"><b>Revoking sharing and freezing the vault are different things.</b>
+  Freeze is the brake you pull when the phone is gone, the account feels wrong, or someone is standing over you.</p>
+  <table style="margin-top:8px">
+    <tr><td style="width:6%">🛑</td><td>All share links stop</td></tr>
+    <tr><td>🛑</td><td>All provider and expert access stops</td></tr>
+    <tr><td>🛑</td><td><b>Successor release is halted</b></td></tr>
+    <tr><td>🛑</td><td>New exports blocked</td></tr>
+    <tr><td>🛑</td><td>Payout and authority changes locked</td></tr>
+    <tr style="border:0"><td style="border:0">🔍</td><td style="border:0">Every device session listed for review</td></tr>
+  </table>
+  <p class="sm" style="margin-top:8px">Unlocking requires a verified device. <b>And because a stolen phone
+  means you may have no device at all, freeze can also be triggered from anywhere using verified identity alone</b> —
+  freezing is always allowed, unfreezing never is.</p>
+  <button class="btn" style="background:var(--rt)">🧊 Freeze my vault</button></div>
+
+  <h2>🔔 How the vault talks to you</h2>
+  <div class="card b"><p class="sm">A vault that nags becomes the app that reminds you of your problem.
+  Three separate channels, deliberately:</p>
+  <table style="margin-top:8px">
+    <tr><th style="width:26%">Channel</th><th style="width:20%">Rhythm</th><th>Purpose</th></tr>
+    <tr><td><b>Vault Statement</b></td><td>Monthly</td><td>Trust and ownership. The account feels real.</td></tr>
+    <tr><td><b>Case Pulse</b></td><td>Weekly · <b>opt-in</b>, active matters only</td><td>Retention while something is actually moving</td></tr>
+    <tr style="border:0"><td style="border:0"><b>Action Alert</b></td><td style="border:0">Immediately</td><td style="border:0">Only when you must actually do something</td></tr>
+  </table>
+  <p class="sm" style="margin-top:10px"><b>Nothing sensitive ever leaves the app.</b> A push says
+  <i>"Your August Vault Statement is ready."</i> and nothing more. Never a case name, never an amount,
+  never who opened what — a lock screen is read by whoever is holding the phone.</p>
+  <div class="card" style="margin:10px 0 0"><b>🔕 Quiet Vault</b>
+  <p class="sm">Statement in-app only · no legal detail in email, <b>including the subject line</b> ·
+  no legal detail in notifications. <b>On by default for anyone who arrives through a safety pathway</b> —
+  they should not have to know to ask for it.</p></div></div>
+
   <div class="card o">
     <b>🟠 The honest limit</b>
     <p class="sm">The vault proves <b>what existed and when, and that nothing changed since</b>.
@@ -4274,6 +4365,21 @@ One file. Four revenue lines. Zero percent of anyone's legal fees.</div>
   </table>
   <p class="xs">The rule: verification scales with <b>what you can do to other people</b> — never with who you are.
   We verify at the moment of consequence, not at the door.</p></div>
+
+  <h2>🎬 "Acting as" — recorded every time, asked almost never</h2>
+  <div class="card"><p class="sm">Every record stores the capacity you were acting in.
+  That does not mean asking you 40 times while you photograph 40 pages.
+  <b>The workspace sets it; only consequence re-confirms it.</b></p>
+  <table style="margin-top:8px">
+    <tr><th style="width:46%">Silent — inherited from where you are</th><th>Re-confirmed before you act</th></tr>
+    <tr><td>Saving a photo, a note, a PDF</td><td>🔏 Signing an Expert Attestation</td></tr>
+    <tr><td>Searching, browsing a case</td><td>⚖️ Sending a provider offer or engagement</td></tr>
+    <tr><td>A personal Evidence Gift</td><td>🏢 An official response in a company's name</td></tr>
+    <tr><td>Importing a docket</td><td>🎓 A professional report or declaration</td></tr>
+    <tr style="border:0"><td style="border:0">Reading your own vault</td><td style="border:0">💰 Receiving a payout · 🏢 Claiming an entity or changing authority</td></tr>
+  </table>
+  <p class="xs">A small chip is always visible — <span class="chip b">👤 Acting as Kevin Hwang</span> —
+  and switching capacity is itself confirmed. <b>The data records the role at every act. The interface asks at almost none.</b></p></div>
 
   <div class="card p">
     <b>🟣 Verified to us, anonymous to them</b>
@@ -4354,25 +4460,47 @@ One file. Four revenue lines. Zero percent of anyone's legal fees.</div>
 <!-- ═══ SUCCESSOR ═══ -->
 <section class="scr" id="successor">
   <h1>If Something Happens to Me</h1>
-  <p class="lede">Legal records outlive the person who made them. Every other vault in your life has a
-  plan for this — a bank, a will, a safe deposit box. <b>Legal records have none.</b></p>
+  <p class="lede">Legal records outlive the person who made them. A bank has a plan for this. A will has a plan.
+  A safe deposit box has a plan. <b>Legal records have none.</b></p>
 
+  <div class="card r">
+    <b>🔴 The rule that makes this safe: inactivity never unlocks anything</b>
+    <p class="sm">Going quiet is not the same as being gone. People take holidays, lose phones, go into hospital,
+    delete the app. Inactivity can only ever <b>start a verification process</b> — it can never, by itself,
+    release a key.</p>
+  </div>
+
+  <h2>🔐 How a release actually happens</h2>
   <div class="card"><table>
-    <tr><th style="width:30%">Successor</th><th style="width:24%">Unlocks after</th><th>Gets access to</th></tr>
-    <tr><td><b>A family member</b><br><span class="xs">🪪 identity verified</span></td><td>30 days of no activity + verified request</td><td>Matters and cost ledger — <b>not</b> Protected Moments</td></tr>
-    <tr style="border:0"><td style="border:0"><b>Your attorney of record</b><br><span class="xs">⚖️ attorney verified</span></td><td style="border:0">Immediately, on a matter you name</td><td style="border:0">That matter only</td></tr>
+    <tr><td style="width:6%"><b>1</b></td><td>Someone requests succession, <b>or</b> long inactivity starts the clock</td></tr>
+    <tr><td><b>2</b></td><td>Every trusted device and email you own is notified — <b>you can cancel instantly</b></td></tr>
+    <tr><td><b>3</b></td><td>Waiting period runs. <b>You choose it: 30 / 60 / 90 days</b></td></tr>
+    <tr><td><b>4</b></td><td>The succession condition must be <b>independently established</b> — not merely asserted</td></tr>
+    <tr style="border:0"><td style="border:0"><b>5</b></td><td style="border:0">Only then is our key share released</td></tr>
+  </table></div>
+
+  <h2>👥 Who you can name</h2>
+  <div class="card"><table>
+    <tr><th style="width:28%">Successor</th><th style="width:26%">Condition</th><th>Scope</th></tr>
+    <tr><td><b>A family member</b><br><span class="xs">🪪 identity verified</span></td>
+        <td>Steps 1–5 above, in full</td><td>Matters and cost ledger — <b>never</b> Protected Moments</td></tr>
+    <tr style="border:0"><td style="border:0"><b>Your attorney of record</b><br><span class="xs">⚖️ attorney verified</span></td>
+        <td style="border:0"><b>Only if you pre-authorised it</b>, per matter, in writing</td>
+        <td style="border:0">That one matter — nothing else</td></tr>
   </table>
+  <p class="xs">An attorney does not get automatic access to anything because they are your attorney.
+  Being counsel is a relationship, not a key.</p>
   <button class="btn">🕯️ Name a successor</button></div>
 
   <div class="card b"><b>How it works without breaking encryption</b>
   <p class="sm">Your key is split so that <b>no single party — including LOWLAW — can open the vault alone.</b>
-  A successor holds one share; releasing ours requires the waiting period and a verified identity match.
-  You are notified at every step while you are able to be, and you can cancel it instantly.</p></div>
+  A successor holds one share. Releasing ours requires every step above, and you are told at each one
+  for as long as you are able to be told.</p></div>
 
-  <div class="card r"><b>🔴 Safety comes before convenience</b>
-  <p class="sm">This feature is the most abusable one in the product. A controlling partner naming themselves
-  successor is the exact scenario we design against: successors are <b>always</b> visible to you, always
-  cancellable by you, always announced by a delay, and Protected Moments are excluded by default —
+  <div class="card r"><b>🔴 Safety before convenience</b>
+  <p class="sm">This is the most abusable feature in the product. A controlling partner naming themselves
+  successor is the exact scenario we design against: successors are <b>always visible to you, always
+  cancellable by you, always delayed</b>, and Protected Moments are excluded by default —
   because the reason you saved something may be the person asking for it.</p></div>
 </section>
 
