@@ -5,8 +5,10 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   const q = clean((req.query && req.query.q) || '');
   const type = (req.query && req.query.type) === 'o' ? 'o' : 'r';
+  const sort = (req.query && req.query.sort) === 'date' ? 'date' : 'relevance';
+  const order = sort === 'date' ? 'dateFiled desc' : 'score desc';
   if (q.length < 2) return res.status(400).json({ error: 'Give me at least two characters.' });
-  const url = CL + '?q=' + encodeURIComponent(q) + '&type=' + type + '&order_by=' + encodeURIComponent('dateFiled desc') + '&page_size=20';
+  const url = CL + '?q=' + encodeURIComponent(q) + '&type=' + type + '&order_by=' + encodeURIComponent(order) + '&page_size=20';
   const headers = { accept: 'application/json', 'user-agent': 'LOWLAW/0.1 (lowlaws.com)' };
   if (process.env.COURTLISTENER_TOKEN) headers.authorization = 'Token ' + process.env.COURTLISTENER_TOKEN;
   let r, data;
@@ -40,6 +42,7 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800');
   return res.status(200).json({
     query: q,
+    sort: sort,
     scope: 'United States - all jurisdictions carried by CourtListener/RECAP',
     total_matches: data.count || 0,
     returned: results.length,
