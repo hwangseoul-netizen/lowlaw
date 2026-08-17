@@ -3593,7 +3593,7 @@ Approve scope change</div></div>
   <div class="card b" id="verbox" style="padding:24px">
     <b style="font-size:16px">✅ Verify a seal — this one is live</b>
     <p class="sm">Paste a receipt, or pick the original file to check it has not changed. No account needed.</p>
-    <textarea id="verjson" placeholder='Paste the seal receipt JSON here'
+    <textarea id="verjson" placeholder='Paste the receipt token (the long string from your seal)'
       style="width:100%;min-height:90px;margin-top:10px;padding:11px;border-radius:10px;border:1px solid var(--border2);
       font-family:ui-monospace,monospace;font-size:12px"></textarea>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
@@ -5078,10 +5078,13 @@ async function llSha256(file){
       st.textContent='';
       out.innerHTML='<div class="card g" style="margin-top:12px"><b>\u2713 Sealed \u00b7 '+
         (d.id||'')+'</b><p class="sm">'+file.name+' \u00b7 '+file.size.toLocaleString()+' bytes</p>'+
-        '<p class="xs" style="margin-top:6px">Keep this receipt. Anyone can verify it without an account.</p>'+
-        '<textarea readonly style="width:100%;min-height:120px;margin-top:8px;padding:10px;border-radius:8px;'+
-        'border:1px solid var(--border);font-family:ui-monospace,monospace;font-size:11px">'+
-        JSON.stringify(d,null,2).replace(/</g,'&lt;')+'</textarea></div>';
+        '<p class="xs" style="margin-top:6px"><b>Copy the token below and keep it.</b> Anyone can verify it '+
+        'at Verify a Seal, or at lowlaws.com/verify.html \u2014 no account needed.</p>'+
+        '<textarea readonly onclick="this.select()" style="width:100%;min-height:96px;margin-top:8px;padding:10px;'+
+        'border-radius:8px;border:1px solid var(--border);font-family:ui-monospace,monospace;font-size:11px;'+
+        'word-break:break-all">'+String(d.token||'').replace(/</g,'&lt;')+'</textarea>'+
+        '<p class="xs" style="margin-top:6px">Sealed at '+
+        ((d.receipt&&d.receipt.payload&&d.receipt.payload.sealed_at)||'')+' \u00b7 SHA-256 '+sha.slice(0,16)+'\u2026</p></div>';
     }catch(e){st.textContent='Something went wrong sealing that file.';}
     go.disabled=false;
   };
@@ -5091,12 +5094,15 @@ async function llSha256(file){
   go.onclick=async function(){
     var st=document.getElementById('verstatus'), out=document.getElementById('verout');
     var ta=document.getElementById('verjson'), vf=document.getElementById('verfile');
-    var receipt; out.innerHTML='';
-    try{ receipt=JSON.parse(ta.value.trim()); }
-    catch(e){ st.textContent='That does not look like a seal receipt.'; return; }
+    out.innerHTML='';
+    var raw=(ta.value||'').trim(), token=raw;
+    if(!raw){ st.textContent='Paste the receipt token first.'; return; }
+    if(raw.charAt(0)==='{'){ try{ token=(JSON.parse(raw)||{}).token||''; }catch(e){ token=''; } }
+    token=String(token).replace(/\s+/g,'');
+    if(!token){ st.textContent='That does not look like a LOWLAW receipt.'; return; }
     go.disabled=true; st.textContent='Checking the signature\u2026';
     try{
-      var body={action:'verify', receipt:receipt};
+      var body={action:'verify', token:token};
       if(vf.files&&vf.files[0]) body.sha256=await llSha256(vf.files[0]);
       var r=await fetch('/api/seal',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
       var d=await r.json(); st.textContent='';
