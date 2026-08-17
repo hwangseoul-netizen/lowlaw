@@ -341,6 +341,26 @@ body.nodemo .demobar{display:none}
 @media(max-width:980px){.demobar{top:56px;padding:7px 14px;font-size:12px}.ctoggle{display:none}}
 @media(max-width:640px){.demobar .lg{display:none}}
 
+
+/* ---- Tier system: Live / Building / Vision ---- */
+body.tier-focus .ni[data-tier="vision"]{display:none}
+body.tier-focus .nsec.sec-empty{display:none}
+.ni[data-tier]::after{font-size:9px;font-weight:800;letter-spacing:.04em;border-radius:4px;padding:1px 5px;margin-left:auto;flex-shrink:0}
+.ni[data-tier="live"]::after{content:'LIVE';background:#ECFDF3;color:#067647;border:1px solid #ABEFC6}
+.ni[data-tier="build"]::after{content:'SOON';background:#FFF7ED;color:#9A3412;border:1px solid #FED7AA}
+body:not(.tier-focus) .ni[data-tier="vision"]::after{content:'MAP';background:#F1F4F8;color:#667085;border:1px solid #DDE3EA}
+.ni{display:flex;align-items:center;gap:7px}
+.tierbar{display:flex;align-items:center;gap:8px;padding:9px 14px;margin:0 0 4px;background:#F8FAFC;
+ border-bottom:1px solid var(--border);font-size:11.5px;color:var(--t2)}
+.tierbtn{font-size:11px;font-weight:750;border-radius:999px;padding:3px 10px;cursor:pointer;
+ border:1px solid var(--border2);background:#fff;color:var(--t2)}
+.tierbtn.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.scrbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border-radius:999px;
+ padding:3px 11px;margin-bottom:10px;letter-spacing:.02em}
+.scrbadge.live{background:#ECFDF3;color:#067647;border:1px solid #ABEFC6}
+.scrbadge.build{background:#FFF7ED;color:#9A3412;border:1px solid #FED7AA}
+.scrbadge.vision{background:#F1F4F8;color:#667085;border:1px solid #DDE3EA}
+
 </style>
 </head>
 <body data-m="individual">
@@ -370,142 +390,142 @@ body.nodemo .demobar{display:none}
 
   <!-- INDIVIDUAL -->
   <div class="nsec m-ind">Home</div>
-  <div class="ni m-ind on" data-s="home">🏡 <span>Start Here</span></div>
-  <div class="ni m-ind" data-s="action">🔔 <span>Action Center</span><span class="ct">5</span></div>
-  <div class="ni m-ind" data-s="command">🎛️ <span>Case Command Center</span></div>
+  <div class="ni m-ind on" data-tier="live" data-s="home">🏡 <span>Start Here</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="action">🔔 <span>Action Center</span><span class="ct">5</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="command">🎛️ <span>Case Command Center</span></div>
 
   <div class="nsec m-ind">Before anything happens</div>
-  <div class="ni m-ind" data-s="moment">🛟 <span>Protect a Moment</span></div>
-  <div class="ni m-ind" data-s="capture">📸 <span>Capture System</span></div>
-  <div class="ni m-ind" data-s="modes">🎭 <span>Capture Modes</span></div>
-  <div class="ni m-ind" data-s="scam">💸 <span>Scam File</span></div>
+  <div class="ni m-ind" data-tier="live" data-s="moment">🛟 <span>Protect a Moment</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="capture">📸 <span>Capture System</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="modes">🎭 <span>Capture Modes</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="scam">💸 <span>Scam File</span></div>
 
   <div class="nsec m-ind">For other people</div>
-  <div class="ni m-ind" data-s="forsomeone">🎁 <span>Protect for Someone</span><span class="ct">new</span></div>
-  <div class="ni m-ind" data-s="router">🔀 <span>Capture Router</span></div>
-  <div class="ni m-ind" data-s="circle">🫂 <span>Watch Circle</span></div>
-  <div class="ni m-ind" data-s="commwatch">🌐 <span>Community Watch</span></div>
-  <div class="ni m-ind" data-s="cluster">🧬 <span>Incident Cluster</span></div>
-  <div class="ni m-ind" data-s="witness">📣 <span>Witness Request</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="forsomeone">🎁 <span>Protect for Someone</span><span class="ct">new</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="router">🔀 <span>Capture Router</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="circle">🫂 <span>Watch Circle</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="commwatch">🌐 <span>Community Watch</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="cluster">🧬 <span>Incident Cluster</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="witness">📣 <span>Witness Request</span></div>
 
   <div class="nsec m-ind">Check anyone</div>
-  <div class="ni m-ind" data-s="lookup">🔎 <span>Look Up Anyone</span><span class="ct">free</span></div>
-  <div class="ni m-ind" data-s="entity">🏢 <span>Entity Profile</span></div>
-  <div class="ni m-ind" data-s="watch">👁️ <span>Legal Watch</span><span class="ct">6</span></div>
-  <div class="ni m-ind" data-s="mailroom">📬 <span>Legal Mailroom</span></div>
+  <div class="ni m-ind" data-tier="live" data-s="lookup">🔎 <span>Look Up Anyone</span><span class="ct">free</span></div>
+  <div class="ni m-ind" data-tier="live" data-s="entity">🏢 <span>Entity Profile</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="watch">👁️ <span>Legal Watch</span><span class="ct">6</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="mailroom">📬 <span>Legal Mailroom</span></div>
 
   <div class="nsec m-ind">My case</div>
-  <div class="ni m-ind" data-s="dash">🏠 <span>All Matters</span><span class="ct">3</span></div>
-  <div class="ni m-ind" data-s="case">📁 <span>CaseGraph</span></div>
-  <div class="ni m-ind" data-s="import">📥 <span>Import Existing Case</span></div>
-  <div class="ni m-ind" data-s="timeline">🕐 <span>Timeline</span></div>
-  <div class="ni m-ind" data-s="evidence">🔒 <span>Evidence Vault</span><span class="ct">246</span></div>
-  <div class="ni m-ind" data-s="court">🏛️ <span>Court Record</span><span class="ct">41</span></div>
-  <div class="ni m-ind" data-s="deadlines">📅 <span>Deadlines</span><span class="ct">4</span></div>
-  <div class="ni m-ind" data-s="discovery">📑 <span>Discovery</span></div>
-  <div class="ni m-ind" data-s="people">👥 <span>People &amp; Entities</span></div>
-  <div class="ni m-ind" data-s="comms">🔐 <span>Communications</span></div>
-  <div class="ni m-ind" data-s="lineage">🌳 <span>Matter Lineage</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="dash">🏠 <span>All Matters</span><span class="ct">3</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="case">📁 <span>CaseGraph</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="import">📥 <span>Import Existing Case</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="timeline">🕐 <span>Timeline</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="evidence">🔒 <span>Evidence Vault</span><span class="ct">246</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="court">🏛️ <span>Court Record</span><span class="ct">41</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="deadlines">📅 <span>Deadlines</span><span class="ct">4</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="discovery">📑 <span>Discovery</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="people">👥 <span>People &amp; Entities</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="comms">🔐 <span>Communications</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="lineage">🌳 <span>Matter Lineage</span></div>
 
   <div class="nsec m-ind">Money</div>
-  <div class="ni m-ind" data-s="cost">💵 <span>Cost Ledger</span></div>
-  <div class="ni m-ind" data-s="offers">🤝 <span>Offers</span><span class="ct">1</span></div>
-  <div class="ni m-ind" data-s="insurance">🛟 <span>Insurance &amp; Coverage</span></div>
-  <div class="ni m-ind" data-s="engagement">🤝 <span>Engagement Hub</span></div>
-  <div class="ni m-ind" data-s="business">🏢 <span>LOWLAW for Business</span><span class="ct">new</span></div>
-  <div class="ni m-ind" data-s="caseecon">🏦 <span>Case Economy</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="cost">💵 <span>Cost Ledger</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="offers">🤝 <span>Offers</span><span class="ct">1</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="insurance">🛟 <span>Insurance &amp; Coverage</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="engagement">🤝 <span>Engagement Hub</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="business">🏢 <span>LOWLAW for Business</span><span class="ct">new</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="caseecon">🏦 <span>Case Economy</span></div>
 
   <div class="nsec m-ind">The market</div>
-  <div class="ni m-ind" data-s="radar">📡 <span>Opportunity Radar</span></div>
-  <div class="ni m-ind" data-s="sku">🏷️ <span>Service Menu</span></div>
-  <div class="ni m-ind" data-s="avail">🟢 <span>Availability Exchange</span></div>
-  <div class="ni m-ind" data-s="team">👥 <span>Case Team</span></div>
-  <div class="ni m-ind" data-s="bench">📊 <span>Case Economics</span></div>
-  <div class="ni m-ind" data-s="scope">📋 <span>Scope &amp; Budget</span></div>
-  <div class="ni m-ind" data-s="inbox">📮 <span>Legal Inbox</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="radar">📡 <span>Opportunity Radar</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="sku">🏷️ <span>Service Menu</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="avail">🟢 <span>Availability Exchange</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="team">👥 <span>Case Team</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="bench">📊 <span>Case Economics</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="scope">📋 <span>Scope &amp; Budget</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="inbox">📮 <span>Legal Inbox</span></div>
 
   <div class="nsec m-ind">Getting help</div>
-  <div class="ni m-ind" data-s="counsel">👔 <span>Counsel History</span></div>
-  <div class="ni m-ind" data-s="market">🔓 <span>Explore Options</span></div>
-  <div class="ni m-ind" data-s="compare">📨 <span>Compare Offers</span><span class="ct">2</span></div>
-  <div class="ni m-ind" data-s="handoff">⏱️ <span>30-Min Handoff</span></div>
-  <div class="ni m-ind" data-s="access">🗝️ <span>Access Ledger</span></div>
-  <div class="ni m-ind" data-s="relief">⚖️ <span>Relief &amp; Appeals</span></div>
-  <div class="ni m-ind" data-s="reviews">⭐ <span>Provider Reviews</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="counsel">👔 <span>Counsel History</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="market">🔓 <span>Explore Options</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="compare">📨 <span>Compare Offers</span><span class="ct">2</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="handoff">⏱️ <span>30-Min Handoff</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="access">🗝️ <span>Access Ledger</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="relief">⚖️ <span>Relief &amp; Appeals</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="reviews">⭐ <span>Provider Reviews</span></div>
 
   <div class="nsec m-ind">Across everything</div>
-  <div class="ni m-ind" data-s="mysearch">🔍 <span>My Legal Search</span></div>
-  <div class="ni m-ind" data-s="routing">🗺️ <span>Where Records Went</span></div>
-  <div class="ni m-ind" data-s="understand">❓ <span>What Needs Understanding</span></div>
-  <div class="ni m-ind" data-s="perms">🔓 <span>Sharing &amp; Permissions</span><span class="ct">23</span></div>
-  <div class="ni m-ind" data-s="correct">✏️ <span>Record Correction</span></div>
-  <div class="ni m-ind" data-s="delegate">👤 <span>Delegated Access</span></div>
-  <div class="ni m-ind" data-s="exit">📦 <span>Download My Legal Life</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="mysearch">🔍 <span>My Legal Search</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="routing">🗺️ <span>Where Records Went</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="understand">❓ <span>What Needs Understanding</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="perms">🔓 <span>Sharing &amp; Permissions</span><span class="ct">23</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="correct">✏️ <span>Record Correction</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="delegate">👤 <span>Delegated Access</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="exit">📦 <span>Download My Legal Life</span></div>
 
   <div class="nsec m-ind">My vault</div>
-  <div class="ni m-ind" data-s="vault">🏦 <span>My Vault</span><span class="ct">1,284</span></div>
-  <div class="ni m-ind" data-s="identity">🪪 <span>Identity Center</span></div>
-  <div class="ni m-ind" data-s="verifyid">✅ <span>Verify My Identity</span></div>
-  <div class="ni m-ind" data-s="verifycred">🎓 <span>Verify a Credential</span></div>
-  <div class="ni m-ind" data-s="successor">🕯️ <span>If Something Happens</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="vault">🏦 <span>My Vault</span><span class="ct">1,284</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="identity">🪪 <span>Identity Center</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="verifyid">✅ <span>Verify My Identity</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="verifycred">🎓 <span>Verify a Credential</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="successor">🕯️ <span>If Something Happens</span></div>
 
   <div class="nsec m-ind">Trust</div>
-  <div class="ni m-ind" data-s="recovery">🔑 <span>Recovery Center</span></div>
-  <div class="ni m-ind" data-s="safety">🛡️ <span>Safety</span></div>
+  <div class="ni m-ind" data-tier="vision" data-s="recovery">🔑 <span>Recovery Center</span></div>
+  <div class="ni m-ind" data-tier="build" data-s="safety">🛡️ <span>Safety</span></div>
 
   <div class="nsec">First run</div>
-  <div class="ni" data-s="onboard">🚀 <span>First 90 Seconds</span></div>
-  <div class="ni" data-s="ia">🧭 <span>Three Verbs &amp; Tabs</span></div>
-  <div class="ni" data-s="audience">🎯 <span>Who Cheers First</span></div>
-  <div class="ni" data-s="emoji">🎨 <span>Emoji System</span></div>
-  <div class="ni" data-s="stack">🧰 <span>Full Tech Stack</span></div>
-  <div class="ni" data-s="components">🧱 <span>Component Library</span></div>
-  <div class="ni" data-s="release">📦 <span>First Release — 17</span></div>
+  <div class="ni" data-tier="vision" data-s="onboard">🚀 <span>First 90 Seconds</span></div>
+  <div class="ni" data-tier="vision" data-s="ia">🧭 <span>Three Verbs &amp; Tabs</span></div>
+  <div class="ni" data-tier="vision" data-s="audience">🎯 <span>Who Cheers First</span></div>
+  <div class="ni" data-tier="vision" data-s="emoji">🎨 <span>Emoji System</span></div>
+  <div class="ni" data-tier="vision" data-s="stack">🧰 <span>Full Tech Stack</span></div>
+  <div class="ni" data-tier="vision" data-s="components">🧱 <span>Component Library</span></div>
+  <div class="ni" data-tier="vision" data-s="release">📦 <span>First Release — 17</span></div>
 
   <!-- PROVIDER -->
   <div class="nsec m-prov">Provider</div>
-  <div class="ni m-prov" data-s="phome">🏛 <span>Provider Home</span></div>
-  <div class="ni m-prov" data-s="register">📝 <span>Registration</span><span class="ct">8</span></div>
-  <div class="ni m-prov" data-s="passport">🎫 <span>Service Passport</span></div>
-  <div class="ni m-prov" data-s="matrix">🧮 <span>Experience Matrix</span></div>
-  <div class="ni m-prov" data-s="workspace">🗄️ <span>Matter Workspace</span><span class="ct">14</span></div>
-  <div class="ni m-prov" data-s="live">🔴 <span>Live Matters</span><span class="ct">8</span></div>
-  <div class="ni m-prov" data-s="feed2">📰 <span>Case Feed</span></div>
-  <div class="ni m-prov" data-s="collab">🤝 <span>Provider Network</span><span class="ct">new</span></div>
-  <div class="ni m-prov" data-s="firm">🏢 <span>Firm Passport</span></div>
-  <div class="ni m-prov" data-s="catalog">🛒 <span>Service Catalog</span></div>
-  <div class="ni m-prov" data-s="pcommand">📊 <span>Command Center</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="phome">🏛 <span>Provider Home</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="register">📝 <span>Registration</span><span class="ct">8</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="passport">🎫 <span>Service Passport</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="matrix">🧮 <span>Experience Matrix</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="workspace">🗄️ <span>Matter Workspace</span><span class="ct">14</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="live">🔴 <span>Live Matters</span><span class="ct">8</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="feed2">📰 <span>Case Feed</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="collab">🤝 <span>Provider Network</span><span class="ct">new</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="firm">🏢 <span>Firm Passport</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="catalog">🛒 <span>Service Catalog</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="pcommand">📊 <span>Command Center</span></div>
 
   <div class="nsec m-prov">Case market</div>
-  <div class="ni m-prov" data-s="feed">💼 <span>Opportunity Feed</span></div>
-  <div class="ni m-prov" data-s="review">🔍 <span>Review Room</span></div>
-  <div class="ni m-prov" data-s="record">📊 <span>Verified Court Record</span></div>
-  <div class="ni m-prov" data-s="graph">🕸️ <span>Performance Graph</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="feed">💼 <span>Opportunity Feed</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="review">🔍 <span>Review Room</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="record">📊 <span>Verified Court Record</span></div>
+  <div class="ni m-prov" data-tier="vision" data-s="graph">🕸️ <span>Performance Graph</span></div>
 
   <!-- EXPERT -->
   <div class="nsec m-exp">Expert</div>
-  <div class="ni m-exp" data-s="ehome">🔬 <span>Expert Home</span></div>
-  <div class="ni m-exp" data-s="missions">🎯 <span>Expert Missions</span><span class="ct">18</span></div>
-  <div class="ni m-exp" data-s="levels">🪜 <span>Mission Levels</span></div>
-  <div class="ni m-exp" data-s="fields">🗂️ <span>Fields &amp; Taxonomy</span></div>
-  <div class="ni m-exp" data-s="askfield">💬 <span>Ask the Field</span></div>
-  <div class="ni m-exp" data-s="efeed">📸 <span>Expert Feed</span></div>
-  <div class="ni m-exp" data-s="erep">📊 <span>Expert Reputation</span></div>
-  <div class="ni m-exp" data-s="contrib">🧾 <span>My Contributions</span><span class="ct">46</span></div>
-  <div class="ni m-exp" data-s="eavail">🗓️ <span>Availability</span></div>
-  <div class="ni m-exp" data-s="attest">🔏 <span>Attestations</span><span class="ct">core</span></div>
-  <div class="ni m-exp" data-s="verify">🔗 <span>Verify a Seal</span></div>
-  <div class="ni m-exp" data-s="panel">🧑‍🔬 <span>Expert Panel</span></div>
-  <div class="ni m-exp" data-s="earn">💵 <span>Earnings</span></div>
-  <div class="ni m-exp" data-s="econ">💰 <span>Expert Economics</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="ehome">🔬 <span>Expert Home</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="missions">🎯 <span>Expert Missions</span><span class="ct">18</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="levels">🪜 <span>Mission Levels</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="fields">🗂️ <span>Fields &amp; Taxonomy</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="askfield">💬 <span>Ask the Field</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="efeed">📸 <span>Expert Feed</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="erep">📊 <span>Expert Reputation</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="contrib">🧾 <span>My Contributions</span><span class="ct">46</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="eavail">🗓️ <span>Availability</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="attest">🔏 <span>Attestations</span><span class="ct">core</span></div>
+  <div class="ni m-exp" data-tier="live" data-s="verify">🔗 <span>Verify a Seal</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="panel">🧑‍🔬 <span>Expert Panel</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="earn">💵 <span>Earnings</span></div>
+  <div class="ni m-exp" data-tier="vision" data-s="econ">💰 <span>Expert Economics</span></div>
 
   <div class="nsec">The business</div>
-  <div class="ni" data-s="design">🎨 <span>Design System</span></div>
-  <div class="ni" data-s="arch">🧱 <span>Architecture</span></div>
-  <div class="ni" data-s="phone">📱 <span>Phone Integration</span></div>
-  <div class="ni" data-s="viral">🔁 <span>Viral Loops</span></div>
-  <div class="ni" data-s="plans">💳 <span>Plans &amp; Pricing</span></div>
-  <div class="ni" data-s="build">🛠️ <span>Build Plan</span></div>
+  <div class="ni" data-tier="vision" data-s="design">🎨 <span>Design System</span></div>
+  <div class="ni" data-tier="vision" data-s="arch">🧱 <span>Architecture</span></div>
+  <div class="ni" data-tier="vision" data-s="phone">📱 <span>Phone Integration</span></div>
+  <div class="ni" data-tier="vision" data-s="viral">🔁 <span>Viral Loops</span></div>
+  <div class="ni" data-tier="vision" data-s="plans">💳 <span>Plans &amp; Pricing</span></div>
+  <div class="ni" data-tier="vision" data-s="build">🛠️ <span>Build Plan</span></div>
 </nav>
 
 <main class="main">
@@ -690,6 +710,17 @@ research the market from scratch again.</div>
   <h1>Protected Moments<span class="new kev">KEVIN</span></h1>
   <p class="lede">A false accusation can land on anyone — famous or not. So the record isn't only for attacking.
   <b>It's your alibi.</b> The trigger isn't "I have a case." It's <b>"that felt off."</b></p>
+  <div class="card b" id="sealbox" style="padding:24px">
+    <b style="font-size:16px">🔒 Seal a file — this one is live</b>
+    <p class="sm">Your file is hashed on this device. We receive the hash, never the file. The receipt below
+    proves this exact file existed at this exact moment.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px">
+      <input type="file" id="sealfile" style="font-size:14px">
+      <button class="btn" id="sealgo" style="margin:0">Seal it</button></div>
+    <p class="xs" id="sealstatus" style="margin-top:10px"></p>
+    <div id="sealout"></div>
+  </div>
+
   <div class="card b">
     <div class="row" style="margin-bottom:10px">
       <div><b style="font-size:17px">Aug 15 · Dinner / meeting with J.</b>
@@ -3559,6 +3590,19 @@ Approve scope change</div></div>
   <h1>Verify a Seal<span class="new gpt">GPT</span></h1>
   <p class="lede">GPT's point, and it's the one that makes the whole seal concept real:
   <b>anyone must be able to verify a document without a LOWLAW account.</b></p>
+  <div class="card b" id="verbox" style="padding:24px">
+    <b style="font-size:16px">✅ Verify a seal — this one is live</b>
+    <p class="sm">Paste a receipt, or pick the original file to check it has not changed. No account needed.</p>
+    <textarea id="verjson" placeholder='Paste the seal receipt JSON here'
+      style="width:100%;min-height:90px;margin-top:10px;padding:11px;border-radius:10px;border:1px solid var(--border2);
+      font-family:ui-monospace,monospace;font-size:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
+      <input type="file" id="verfile" style="font-size:14px">
+      <button class="btn" id="vergo" style="margin:0">Verify</button></div>
+    <p class="xs" id="verstatus" style="margin-top:10px"></p>
+    <div id="verout"></div>
+  </div>
+
   <div class="card b" style="text-align:center;padding:28px">
     <div style="font-family:ui-monospace;font-size:12px;color:var(--t3);letter-spacing:.24em;line-height:1.5">
       ▓▓▒▒▓▒▓▓<br>▒▓▒▓▓▒▒▓<br>▓▓▒▒▓▓▒▓<br>▒▒▓▓▒▓▓▒</div>
@@ -4960,6 +5004,114 @@ function lkRender(d){
       '</div>';
   }).join('');
 }
+
+
+/* ---- Tier system: honest labelling of what actually works ---- */
+var TIER_LIVE=['home','lookup','entity','moment','verify'];
+var TIER_BUILD=['action','watch','import','command','timeline','court','evidence','vault','identity','safety'];
+function tierOf(id){return TIER_LIVE.indexOf(id)>=0?'live':(TIER_BUILD.indexOf(id)>=0?'build':'vision');}
+
+function tierBadge(id){
+  var sec=document.getElementById(id); if(!sec) return;
+  if(sec.querySelector(':scope > .scrbadge')) return;
+  var t=tierOf(id), b=document.createElement('div');
+  b.className='scrbadge '+t;
+  b.textContent = t==='live' ? '\u25CF Live \u2014 real data, works right now'
+    : t==='build' ? '\u25CB Being built \u2014 the screen is real, the data on it is a sample'
+    : '\u25CB Product map \u2014 designed, not built. Sample data.';
+  sec.insertBefore(b, sec.firstChild);
+}
+function applyTierFilter(focus){
+  document.body.classList.toggle('tier-focus', !!focus);
+  try{localStorage.setItem('ll_tier', focus?'1':'0');}catch(e){}
+  document.querySelectorAll('.tierbtn').forEach(function(x){x.classList.toggle('on', (x.dataset.tier==='focus')===!!focus);});
+  syncSections();
+}
+function syncSections(){
+  var nav=document.getElementById('nav'); if(!nav) return;
+  var kids=[].slice.call(nav.children), cur=null, seen=0;
+  kids.forEach(function(el){
+    if(el.classList.contains('nsec')){ if(cur) cur.classList.toggle('sec-empty', seen===0); cur=el; seen=0; }
+    else if(el.classList.contains('ni')){
+      var vis = getComputedStyle(el).display!=='none' && !el.classList.contains('m-hidden');
+      if(vis) seen++;
+    }
+  });
+  if(cur) cur.classList.toggle('sec-empty', seen===0);
+}
+(function(){
+  var nav=document.getElementById('nav'); if(!nav) return;
+  var bar=document.createElement('div'); bar.className='tierbar';
+  bar.innerHTML='<b style="color:var(--t1)">Show</b>'+
+    '<span class="tierbtn on" data-tier="focus">What works now</span>'+
+    '<span class="tierbtn" data-tier="all">Everything (104)</span>';
+  nav.parentNode.insertBefore(bar, nav);
+  bar.querySelectorAll('.tierbtn').forEach(function(b){
+    b.onclick=function(){applyTierFilter(b.dataset.tier==='focus');};});
+  var saved='1'; try{saved=localStorage.getItem('ll_tier')||'1';}catch(e){}
+  applyTierFilter(saved==='1');
+  document.querySelectorAll('section.scr').forEach(function(sc){tierBadge(sc.id);});
+})();
+
+
+/* ---- Live Seal + Verify inside the app (same API as /seal.html) ---- */
+async function llSha256(file){
+  var buf=await file.arrayBuffer();
+  var h=await crypto.subtle.digest('SHA-256', buf);
+  return [].map.call(new Uint8Array(h), function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+(function(){
+  var f=document.getElementById('sealfile'), go=document.getElementById('sealgo');
+  if(!go) return;
+  go.onclick=async function(){
+    var st=document.getElementById('sealstatus'), out=document.getElementById('sealout');
+    if(!f.files||!f.files[0]){st.textContent='Pick a file first.';return;}
+    var file=f.files[0]; go.disabled=true; out.innerHTML='';
+    st.textContent='Hashing on this device\u2026';
+    try{
+      var sha=await llSha256(file);
+      st.textContent='Requesting a signed receipt\u2026';
+      var r=await fetch('/api/seal',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({sha256:sha,name:file.name,bytes:file.size,kind:file.type||'application/octet-stream'})});
+      var d=await r.json();
+      if(!r.ok){st.textContent=d.error||'Could not seal.';go.disabled=false;return;}
+      st.textContent='';
+      out.innerHTML='<div class="card g" style="margin-top:12px"><b>\u2713 Sealed \u00b7 '+
+        (d.id||'')+'</b><p class="sm">'+file.name+' \u00b7 '+file.size.toLocaleString()+' bytes</p>'+
+        '<p class="xs" style="margin-top:6px">Keep this receipt. Anyone can verify it without an account.</p>'+
+        '<textarea readonly style="width:100%;min-height:120px;margin-top:8px;padding:10px;border-radius:8px;'+
+        'border:1px solid var(--border);font-family:ui-monospace,monospace;font-size:11px">'+
+        JSON.stringify(d,null,2).replace(/</g,'&lt;')+'</textarea></div>';
+    }catch(e){st.textContent='Something went wrong sealing that file.';}
+    go.disabled=false;
+  };
+})();
+(function(){
+  var go=document.getElementById('vergo'); if(!go) return;
+  go.onclick=async function(){
+    var st=document.getElementById('verstatus'), out=document.getElementById('verout');
+    var ta=document.getElementById('verjson'), vf=document.getElementById('verfile');
+    var receipt; out.innerHTML='';
+    try{ receipt=JSON.parse(ta.value.trim()); }
+    catch(e){ st.textContent='That does not look like a seal receipt.'; return; }
+    go.disabled=true; st.textContent='Checking the signature\u2026';
+    try{
+      var body={action:'verify', receipt:receipt};
+      if(vf.files&&vf.files[0]) body.sha256=await llSha256(vf.files[0]);
+      var r=await fetch('/api/seal',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+      var d=await r.json(); st.textContent='';
+      var ok=d.verified===true;
+      out.innerHTML='<div class="card '+(ok?'g':'o')+'" style="margin-top:12px"><b>'+
+        (ok?'\u2713 Signature valid':'\u2717 Signature did not verify')+'</b>'+
+        (typeof d.content_match!=='undefined'
+          ? '<p class="sm">File contents '+(d.content_match?'match this receipt.':'do NOT match this receipt.')+'</p>'
+          : '<p class="sm">Add the original file above to also check the contents.</p>')+
+        '<p class="xs" style="margin-top:6px">A valid signature means this content existed in this exact form at that '+
+        'time. It says nothing about whether the content is true.</p></div>';
+    }catch(e){ st.textContent='Could not reach the verify service.'; }
+    go.disabled=false;
+  };
+})();
 
 </script>
 
